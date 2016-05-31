@@ -1,0 +1,22 @@
+{
+  "name": "moreongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonShanyuk/moreongo.git"
+  },
+  "author": "AntonShanyuk (a.shanyuk@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AntonShanyuk/moreongo/issues"
+  },
+  "homepage": "https://github.com/AntonShanyuk/moreongo#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
