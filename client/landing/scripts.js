@@ -31,67 +31,64 @@
         $('#galleryImage').attr("src", $(e.relatedTarget).data("src"));
     });
 
-    $(function () {
-        var selectedCity, selectedService, dirtyCity, dirtyService;
-        
-        var cities = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '/api/cities/%term',
-                wildcard: '%term'
-            }
-        });
+    var selectedCity, selectedService, dirtyCity, dirtyService;
 
-        $('#city').typeahead(null, {
-            name: 'cities',
-            display: 'text',
-            source: cities
-        }).on('typeahead:select', function(e, obj){
-            selectedCity = obj;
-            console.log(selectedCity);
-        });
-        
-        var services = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '/api/services/%term',
-                wildcard: '%term'
-            }
-        });
+    var cities = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/cities/%term',
+            wildcard: '%term'
+        }
+    });
 
-        $('#service ').typeahead(null, {
-            name: 'services',
-            display: 'text',
-            source: services
-        }).on('typeahead:select', function(e, obj){
-            selectedService = obj;
-        });
-        
-        $('.start-form').submit(function(e){            
-            var params = [];
-            var dirtyService = $('#service').val();
-            var dirtyCity = $('#city').val();
-            
-            if(dirtyCity && (!selectedCity || dirtyCity != selectedCity.text)){
-                params.push('city=' + dirtyCity);
-            } else if(selectedCity){
-                params.push('cityId=' + selectedCity.id);
-            }
-            
-            if(dirtyService && (!selectedService || dirtyService != selectedService.text)){
-                params.push('service=' + dirtyService);
-            } else if(selectedService){
-                params.push('serviceId=' + selectedService.id);
-            }
-            
-            if(params.length){
-                window.location = '/app/#?' + params.join('&');
-            }
-            e.preventDefault();
-        });
-        
+    $('#city').typeahead(null, {
+        name: 'cities',
+        display: 'text',
+        source: cities
+    }).on('typeahead:select', function (e, obj) {
+        selectedCity = obj;
+        console.log(selectedCity);
+    });
+
+    var services = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/services/%term',
+            wildcard: '%term'
+        }
+    });
+
+    $('#service ').typeahead(null, {
+        name: 'services',
+        display: 'text',
+        source: services
+    }).on('typeahead:select', function (e, obj) {
+        selectedService = obj;
+    });
+
+    $('.start-form').submit(function (e) {
+        var params = [];
+        var dirtyService = $('#service').val();
+        var dirtyCity = $('#city').val();
+
+        if (dirtyCity && (!selectedCity || dirtyCity != selectedCity.text)) {
+            params.push('city=' + dirtyCity);
+        } else if (selectedCity) {
+            params.push('cityId=' + selectedCity.id);
+        }
+
+        if (dirtyService && (!selectedService || dirtyService != selectedService.text)) {
+            params.push('service=' + dirtyService);
+        } else if (selectedService) {
+            params.push('serviceId=' + selectedService.id);
+        }
+
+        if (params.length) {
+            window.location = '/app/#?' + params.join('&');
+        }
+        e.preventDefault();
     });
 
 })(jQuery);
