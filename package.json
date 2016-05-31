@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "postinstall": "node ./node_modules/bower/bin/bower install"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/AntonShanyuk/moreongo#readme",
   "dependencies": {
+    "bower": "^1.7.9",
     "express": "^4.13.4"
   }
 }
