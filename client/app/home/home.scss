@@ -5,11 +5,16 @@
         width: 100%;
     }
     
-    .angular-google-map-container, .scroll-container {
+    .angular-google-map-container {
         position: absolute;
         top: 0;
         bottom: 0;
         right: 0;
         left: 0;
+    }
+    
+    .scroll-container{
+        position: absolute;
+        height: 100%;
     }
 }
