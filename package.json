@@ -18,11 +18,11 @@
   },
   "homepage": "https://github.com/AntonShanyuk/moreongo#readme",
   "dependencies": {
+    "gulp": "^3.9.1",
     "bower": "^1.7.9",
     "express": "^4.13.4"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
     "gulp-bower": "0.0.13",
     "gulp-util": "^3.0.7",
     "html-webpack-plugin": "^2.19.0",
