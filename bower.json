@@ -10,6 +10,9 @@
   "dependencies": {
     "typeahead.js": "^0.11.1",
     "angular": "^1.5.6",
-    "angular-google-maps": "^2.3.3"
+    "angular-google-maps": "^2.3.3",
+    "angular-ui-router": "^0.3.0",
+    "angular-simple-logger": "^0.1.7",
+    "lodash": "^4.13.1"
   }
 }

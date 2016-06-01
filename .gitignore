@@ -1,4 +1,8 @@
 node_modules/
 .vscode/
 client/bower_components/
-client/app/index*
+client/app/index.html
+client/app/app-bundle.js
+client/app/app-bundle.js.map
+client/app/vendor-bundle.js
+client/app/vendor-bundle.js.map

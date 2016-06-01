@@ -86,7 +86,7 @@
         }
 
         if (params.length) {
-            window.location = '/app/#?' + params.join('&');
+            window.location = '/app/#/?' + params.join('&');
         }
         e.preventDefault();
     });
