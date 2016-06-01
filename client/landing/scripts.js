@@ -84,10 +84,10 @@
         } else if (selectedService) {
             params.push('serviceId=' + selectedService.id);
         }
-
-        if (params.length) {
-            window.location = '/app/#/?' + params.join('&');
-        }
+        
+        var query = params.length ?  params.join('&') : '';
+        window.location = '/app/#/?' + query;
+        
         e.preventDefault();
     });
 
