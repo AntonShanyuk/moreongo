@@ -30,9 +30,7 @@ app.get('/api/services/:term?', (req, res) => {
 });
 
 app.use('/client', express.static(path.join(__dirname, '../client')));
-app.get('/app', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/app/index.html'));
-});
+app.use('/app', express.static(path.join(__dirname, '../client/app')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/landing/index.html'));
 });
