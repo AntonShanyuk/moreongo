@@ -1,3 +1,4 @@
+ /** @ngInject */
 module.exports = function (mapService, uiGmapGoogleMapApi, $scope) {
     var vm = this;
     

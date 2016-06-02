@@ -1,3 +1,4 @@
+ /** @ngInject */
 module.exports = function ($window, eventEmitter) {
     eventEmitter.inject(this);
 

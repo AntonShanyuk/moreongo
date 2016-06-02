@@ -1,3 +1,4 @@
+ /** @ngInject */
 module.exports = function (mapService) {
     var vm = this;
 

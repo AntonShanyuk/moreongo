@@ -12,7 +12,9 @@ var registerServiceController = require('./register-service/register-service.con
 
 var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'rt.eventemitter']);
 
-app.config(function ($stateProvider) {
+app.config(
+     /** @ngInject */
+    function ($stateProvider) {
     $stateProvider
         .state('home', {
             url: '/?city&cityId&service&serviceId',
@@ -30,7 +32,9 @@ app.config(function ($stateProvider) {
                 }
             }
         });
-}).config(function(uiGmapGoogleMapApiProvider) {
+}).config(
+     /** @ngInject */
+    function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
         //    key: 'your api key',
         language: 'uk'
