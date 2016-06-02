@@ -18,13 +18,19 @@
   },
   "homepage": "https://github.com/AntonShanyuk/moreongo#readme",
   "dependencies": {
+    "bootstrap-loader": "^1.0.10",
+    "bootstrap-sass": "^3.3.6",
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
+    "file-loader": "^0.8.5",
     "html-loader": "^0.4.3",
+    "imports-loader": "^0.6.5",
     "ng-annotate-webpack-plugin": "^0.1.2",
     "node-sass": "^3.7.0",
+    "resolve-url-loader": "^1.4.3",
     "sass-loader": "^3.2.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

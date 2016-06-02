@@ -1,0 +1,54 @@
+<div class="register-service-panel panel">
+    <form>
+        <div class="form-group-lg control-group">
+            <label for="location">Введите Ваш адрес или перетащите точку на карте</label>
+            <input type="text" class="form-control" id="location" placeholder="Введите Ваш адрес" ng-model="vm.address">
+        </div>
+        <div class="form-group-lg control-group">
+            <label for="name">Укажите наименование Вашего сервиса</label>
+            <input type="text" class="form-control" id="name" placeholder="Например, Салон красоты 'Афродита'">
+        </div>
+        
+        <hr>
+        
+        <div class="form-group-lg">
+            <label>Укажите наименование и стоимость Ваших услуг</label>
+            <div class="row services-control-group" >
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" placeholder="Например, маникюр">
+                </div>
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" value="100">
+                </div>
+            </div>
+            
+            <div class="row services-control-group">
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" placeholder="Например, маникюр">
+                </div>
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" value="100">
+                </div>
+            </div>
+            
+        </div>
+        
+        <hr>
+        
+        <div class="form-group-lg control-group">
+            <label for="email">Чтобы получать уведомления о записях, оставьте контактный email (опционально)</label>
+            <input type="email" class="form-control" id="email">
+        </div>
+        <div class="form-group-lg control-group">
+            <label for="password">Чтобы иметь возможность зайти с другого компьютера или телефона, введите пароль для учетной записи (опционально)</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+        
+        <hr>
+        
+        <div class="form-group-lg">
+            <button type="submit" class="btn btn-default btn-lg transparent pull-right">Зарегистрировать</button>
+            <div class="clearfix"></div>
+        </div>
+    </form>
+</div>

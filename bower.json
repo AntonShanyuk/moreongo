@@ -13,6 +13,8 @@
     "angular-google-maps": "^2.3.3",
     "angular-ui-router": "^0.3.0",
     "angular-simple-logger": "^0.1.7",
-    "lodash": "^4.13.1"
+    "lodash": "^4.13.1",
+    "jquery": "^2.2.4",
+    "angular-tiny-eventemitter": "^1.2.0"
   }
 }

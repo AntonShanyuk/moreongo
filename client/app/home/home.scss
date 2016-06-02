@@ -14,7 +14,28 @@
     }
     
     .scroll-container{
-        position: absolute;
-        height: 100%;
+        &{
+            position: absolute;
+            height: 100%;
+            margin: 100px;
+        }
+        
+        .panel{
+            &{
+                width: 500px;
+                background: rgba(0,0,0, .5);
+                border: 1px solid rgba(0, 0, 0, .7);
+                padding: 25px;
+            }
+            
+            *{
+                color: white;
+            }
+            
+            .form-control, .transparent{
+                background: transparent !important;
+                border: 1px solid white;
+            }
+        }
     }
 }
