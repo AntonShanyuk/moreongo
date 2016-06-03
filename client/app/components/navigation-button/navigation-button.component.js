@@ -9,9 +9,10 @@ module.exports = {
         title: '@'
     },
     template: template,
-    controller: function($state){
+    /** @ngInject */
+    controller: function ($state) {
         var vm = this;
-        
+
         vm.go = function () {
             $state.go(vm.state);
         }
