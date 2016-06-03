@@ -6,6 +6,10 @@ module.exports = function ($window, eventEmitter) {
     this.setCircleLocation = function (position) {
         that.emit('circleLocationSet', position);
     }
+    
+    this.removeCircle = function(){
+        that.emit('circleRemoved');
+    }
 
     this.requestLocation = function (callback) {
         if ($window.navigator.geolocation) {

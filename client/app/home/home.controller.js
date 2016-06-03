@@ -3,7 +3,6 @@ module.exports = function (mapService) {
     var vm = this;
 
     vm.map = { center: { latitude:  50.4223541, longitude: 30.5211557 }, zoom: 14 };
-    vm.circleCenter = { latitude:  50.4223541, longitude: 30.5211557 };
     
     vm.options = { scrollwheel: false };
         vm.circle = {
@@ -41,5 +40,9 @@ module.exports = function (mapService) {
             latitude: position.latitude,
             longitude: position.longitude
         };
+    });
+    
+    mapService.on('circleRemoved', function(){
+        vm.circleCenter = null;
     });
 }

@@ -15,14 +15,15 @@ module.exports = {
             { test: /\.scss$/, loaders: ["style", "css", "sass"] },
             { test: /\.(woff2?|svg)$/, loader: 'url?limit=10000' },
             { test: /\.(ttf|eot)$/, loader: 'file' },
-            { test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery' }
+            { test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery' }
         ],
     },
     htmlLoader: {
         ignoreCustomFragments: [/\{\{.*?}}/]
     },
     entry: {
-        'vendor-bundle': ['jquery', 'lodash', 'angular', 'angular-simple-logger', 'angular-google-maps', 'angular-ui-router', 'bootstrap-loader', 'angular-tiny-eventemitter'],
+        'vendor-bundle': ['jquery', 'lodash', 'angular', 'angular-simple-logger', 'angular-google-maps', 'angular-ui-router', 'bootstrap-loader', 'angular-tiny-eventemitter',
+            'angular-input-masks', 'ng-focus-on'],
         'app-bundle': './client/app/client-app.js'
     },
     output: {

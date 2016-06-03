@@ -7,28 +7,24 @@
         </div>
         <div class="form-group-lg control-group">
             <label for="name">Укажите наименование Вашего сервиса</label>
-            <input type="text" class="form-control" id="name" placeholder="Например, Салон красоты 'Афродита'">
+            <input type="text" class="form-control" id="name" placeholder="Например, Салон красоты 'Афродита'" focus-on="name">
         </div>
 
         <hr>
 
         <div class="form-group-lg">
             <label>Укажите наименование и стоимость Ваших услуг</label>
-            <div class="row services-control-group">
-                <div class="col-xs-8">
-                    <input type="text" class="form-control" placeholder="Например, маникюр">
-                </div>
-                <div class="col-xs-4">
-                    <input type="text" class="form-control" value="100">
-                </div>
-            </div>
 
-            <div class="row services-control-group">
+            <div class="row services-control-group" ng-repeat="service in vm.services">
                 <div class="col-xs-8">
-                    <input type="text" class="form-control" placeholder="Например, маникюр">
+                    <input type="text" class="form-control" placeholder="Например, маникюр" ng-model="service.text" ng-change="vm.serviceChange(service)"
+                        focus-on="{{$index}}">
                 </div>
                 <div class="col-xs-4">
-                    <input type="text" class="form-control" value="100">
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="100" ui-number-mask="0" ng-model="service.price" ng-change="vm.serviceChange(service)">
+                        <div class="transparent input-group-addon">грн</div>
+                    </div>
                 </div>
             </div>
 
