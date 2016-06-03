@@ -13,37 +13,59 @@
         left: 0;
     }
     
-    .scroll-container{
-        &{
-            position: absolute;
-            height: 100%;
-            padding: 100px;
-        }
-        
-        .panel{
-            &{
-                width: 500px;
-                background: rgba(0,0,0, .5);
-                border: 1px solid rgba(0, 0, 0, .7);
-                padding: 25px;
-            }
-            
-            *{
-                color: white;
-            }
-            
-            .form-control, .transparent{
-                background: transparent !important;
-                border: 1px solid white;
-            }
-        }
+    .right-panel-xs{
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 1;
     }
     
     .right-panel{
+        position: fixed;
+        top: 100px;
+        right: 150px;
+    }
+    
+    .left-panel-xs{
+        position: relative;
+        top: 50px;
+    }
+    
+    .left-panel{
+        position: relative;
+        left: 100px;
+        top: 100px;
+        float: left;
+        width: 500px;
+    }
+    
+    .left-panel-xs.collpsed, .left-panel.collapsed{
+        width: 80px;
+    }
+    
+    .panel{
         &{
-            position: absolute;
-            top: 100px;
-            right: 150px;
+            background: rgba(0,0,0, .5);
+            border: 1px solid rgba(0, 0, 0, .7);
+            padding: 25px;
+        }
+        
+        *{
+            color: white;
+        }
+        
+        .form-control, .transparent{
+            background: transparent !important;
+            border: 1px solid white;
+        }
+        
+        .collapse-icon{
+            right: 0;
+            top: 0;
+            float: right;
+            cursor: pointer;
         }
     }
+    
+    
 }
