@@ -48,7 +48,6 @@
         source: cities
     }).on('typeahead:select', function (e, obj) {
         selectedCity = obj;
-        console.log(selectedCity);
     });
 
     var services = new Bloodhound({
