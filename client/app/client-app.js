@@ -10,8 +10,6 @@ require('./register-service/register-service.scss');
 var registerServiceTemplate = require('./register-service/register-service.html');
 var registerServiceController = require('./register-service/register-service.controller');
 
-var navigationButtonComponent = require('./components/navigation-button/navigation-button.component');
-
 var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'rt.eventemitter', 'ui.utils.masks', 'focusOn']);
 
 app.config(
@@ -30,7 +28,7 @@ app.config(
                 views: {
                     scroll: {},
                     rightPanel: {
-                        template: '<navigation-button state="home.registerService" classes="btn-danger" title="Добавить мой сервис">'
+                        template: '<a ui-sref="home.registerService" class="btn btn-lg btn-danger">Добавить мой сервис</a>'
                     }
                 },
                 resolve: {
@@ -49,7 +47,7 @@ app.config(
                         controllerAs: 'vm'
                     },
                     rightPanel: {
-                        template: '<navigation-button state="home.search" classes="" title="Назад к результатам поиска">'
+                        template: '<a ui-sref="home.search" class="btn btn-lg btn-default">Назад к результатам поиска</a>'
                     }
                 }
             });
