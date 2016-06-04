@@ -1,7 +1,8 @@
  /** @ngInject */
-module.exports = function (mapService) {
+module.exports = function (mapService, stateService) {
     var vm = this;
 
+    vm.state = stateService.home;
     vm.map = { center: { latitude:  50.4223541, longitude: 30.5211557 }, zoom: 14 };
     
     vm.options = { scrollwheel: false };

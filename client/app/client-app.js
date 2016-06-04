@@ -1,6 +1,9 @@
 require('./index.scss');
 
 var mapService = require('./services/map.service');
+var stateService = require('./services/state.service');
+
+var organization = require('./api/organization.resource.js');
 
 require('./home/home.scss');
 var homeTemplate = require('./home/home.html');
@@ -10,7 +13,7 @@ require('./register-service/register-service.scss');
 var registerServiceTemplate = require('./register-service/register-service.html');
 var registerServiceController = require('./register-service/register-service.controller');
 
-var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'rt.eventemitter', 'ui.utils.masks', 'focusOn']);
+var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'rt.eventemitter', 'ui.utils.masks', 'focusOn', 'ngResource']);
 
 app.config(
     /** @ngInject */
@@ -62,5 +65,6 @@ app.config(
 
 
 app.service('mapService', mapService);
+app.service('stateService', stateService);
 
-app.component('navigationButton', navigationButtonComponent);
+app.factory('organization', organization);

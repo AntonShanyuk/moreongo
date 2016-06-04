@@ -18,40 +18,15 @@
     </div>
 
     <div>
-        <div class="left-panel-xs visible-sm-block visible-xs-block" ng-class="{collapsed: vm.hidden}">
-            <div class="panel">
-                <div ng-hide="!vm.hidden" ng-click="vm.hidden = false;">
-                    <i class="glyphicon glyphicon-menu-right collapse-icon"></i>
-                    <i class="glyphicon glyphicon-menu-right collapse-icon"></i>
-                    <div class="clearfix"></div>
-                </div>
-                <div ng-hide="vm.hidden" ng-click="vm.hidden = true;">
-                    <i class="glyphicon glyphicon-menu-left collapse-icon"></i>
-                    <i class="glyphicon glyphicon-menu-left collapse-icon"></i>
-                    <div class="clearfix"></div>
-                </div>
-                <div ng-hide="vm.hidden">
-                    <div ui-view='scroll'></div>
-                </div>
+        <div class="left-panel-xs visible-sm-block visible-xs-block" ng-class="{collapsed: vm.state.hidden}">
+            <div>
+                <div ui-view='scroll'></div>
             </div>
-
         </div>
 
-        <div class="left-panel visible-md-block visible-lg-block" ng-class="{collapsed: vm.hidden}">
-            <div class="panel">
-                <div ng-hide="!vm.hidden" ng-click="vm.hidden = false;">
-                    <i class="glyphicon glyphicon-menu-right collapse-icon"></i>
-                    <i class="glyphicon glyphicon-menu-right collapse-icon"></i>
-                    <div class="clearfix"></div>
-                </div>
-                <div ng-hide="vm.hidden" ng-click="vm.hidden = true;">
-                    <i class="glyphicon glyphicon-menu-left collapse-icon"></i>
-                    <i class="glyphicon glyphicon-menu-left collapse-icon"></i>
-                    <div class="clearfix"></div>
-                </div>
-                <div ng-hide="vm.hidden">
-                    <div ui-view='scroll'></div>
-                </div>
+        <div class="left-panel visible-md-block visible-lg-block" ng-class="{collapsed: vm.state.hidden}">
+            <div>
+                <div ui-view='scroll'></div>
             </div>
         </div>
 

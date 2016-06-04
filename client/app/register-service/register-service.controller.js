@@ -1,24 +1,37 @@
 var _ = require('lodash');
 
 /** @ngInject */
-module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus) {
+module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization) {
     var vm = this;
 
-    vm.services = [{ text: '', price: 0 }];
+    vm.homeState = stateService.home;
+    vm.services = [{ name: '', price: 0 }];
 
     vm.addressChanged = function () {
         setPosition(vm.address);
     }
 
     vm.serviceChange = function (service) {
-        var emptyServices = _.filter(vm.services, { text: '' });
+        var emptyServices = _.filter(vm.services, { name: '' });
         if (!emptyServices || !emptyServices.length) {
-            vm.services.push({ text: '', price: 0 });
+            vm.services.push({ name: '', price: 0 });
         } else if (emptyServices.length > 1) {
             var index = vm.services.indexOf(service);
             focus((index -1).toString());
             vm.services.splice(index, 1);
         }
+    }
+    
+    vm.registerService = function(){
+        organization.post({
+            name: vm.name,
+            address: vm.addressObject,
+            services: _.filter(vm.services, function(service){
+                return !!service.name;
+            }),
+            email: vm.email,
+            password: vm.password
+        });
     }
 
     mapService.requestLocation(function (position) {
@@ -41,6 +54,7 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus) {
             }, function (address) {
                 if (address && address.length) {
                     vm.address = address[0].formatted_address;
+                    vm.addressObject = address;
                     focus('name');
                     $scope.$apply();
                 }
