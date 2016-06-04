@@ -1,6 +1,6 @@
 var Bottle = require('bottlejs');
 
-var orgnaizationModel = require('./models/organization-model');
+var orgnaizationModel = require('./models/organization.model');
 var expressApp = require('./express-app');
 var OrganizationController = require('./controllers/organization-controller');
 var ApiRoutes = require('./api-routes');
