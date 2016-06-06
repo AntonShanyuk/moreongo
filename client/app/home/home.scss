@@ -17,6 +17,7 @@
         position: fixed;
         top: 0;
         right: 0;
+        left: 0;
         z-index: 1;
     }
     
@@ -24,6 +25,10 @@
         position: fixed;
         top: 100px;
         right: 150px;
+    }
+    
+    .full-width{
+        width: 100%;
     }
     
     .left-panel-xs{

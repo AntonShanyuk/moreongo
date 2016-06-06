@@ -4,6 +4,7 @@ var mapService = require('./services/map.service');
 var stateService = require('./services/state.service');
 
 var organization = require('./api/organization.resource.js');
+var session = require('./api/session.resource.js');
 
 require('./home/home.scss');
 var homeTemplate = require('./home/home.html');
@@ -12,6 +13,9 @@ var homeController = require('./home/home.controller');
 require('./register-service/register-service.scss');
 var registerServiceTemplate = require('./register-service/register-service.html');
 var registerServiceController = require('./register-service/register-service.controller');
+
+var homeRightPanelTemplate = require('./home-right-panel/home-right-panel.html');
+var homeRightPanelController = require('./home-right-panel/home-right-panel.controller.js');
 
 var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'rt.eventemitter', 'ui.utils.masks', 'focusOn', 'ngResource']);
 
@@ -31,13 +35,19 @@ app.config(
                 views: {
                     scroll: {},
                     rightPanel: {
-                        template: '<a ui-sref="home.registerService" class="btn btn-lg btn-danger">Добавить мой сервис</a>'
+                        template: homeRightPanelTemplate,
+                        controller: homeRightPanelController,
+                        controllerAs: 'vm'
                     }
                 },
                 resolve: {
                     /** @ngInject */
                     init: function (mapService) {
                         mapService.removeCircle();
+                    },
+                    /** @ngInject */
+                    currentSession: function (session) {
+                        return session.get().$promise;
                     }
                 }
             })
@@ -50,7 +60,20 @@ app.config(
                         controllerAs: 'vm'
                     },
                     rightPanel: {
-                        template: '<a ui-sref="home.search" class="btn btn-lg btn-default">Назад к результатам поиска</a>'
+                        template: '<a ui-sref="home.search" class="btn btn-lg btn-default full-width">Назад к результатам поиска</a>'
+                    }
+                }
+            })
+            .state('home.myService', {
+                url: 'my-service/',
+                views: {
+                    scroll: {
+                        template: registerServiceTemplate,
+                        controller: registerServiceController,
+                        controllerAs: 'vm'
+                    },
+                    rightPanel: {
+                        template: '<a ui-sref="home.search" class="btn btn-lg btn-default full-width">Назад к результатам поиска</a>'
                     }
                 }
             });
@@ -67,4 +90,5 @@ app.config(
 app.service('mapService', mapService);
 app.service('stateService', stateService);
 
+app.factory('session', session);
 app.factory('organization', organization);
