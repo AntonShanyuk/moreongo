@@ -10,11 +10,12 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
         vm.name = myOrganization.name;
         vm.services = myOrganization.services.concat([{ name: '', price: '' }]);
         var location = myOrganization.address[0].geometry.location;
-        setAddress({
+        initMapPosition({
             latitude: location.lat,
             longitude: location.lng
         });
     } else {
+        mapService.requestLocation(initMapPosition);
         vm.services = [{ name: '', price: 0 }];
     }
 
@@ -56,11 +57,6 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
         });
     }
 
-    mapService.requestLocation(function (position) {
-        mapService.setCircleLocation(position);
-        setAddress(position);
-    });
-
     mapService.on('circleLocationChanged', function (position) {
         setAddress(position);
     });
@@ -92,10 +88,11 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
             }, function (position) {
                 if (position && position.length) {
                     var location = position[0].geometry.location;
+                    vm.addressObject = position;
                     mapService.setCircleLocation({
                         latitude: location.lat(),
                         longitude: location.lng()
-                    })
+                    });
                 }
             });
         });
@@ -105,5 +102,10 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
         return _.filter(vm.services, function (service) {
             return !!service.name;
         });
+    }
+
+    function initMapPosition(position) {
+        mapService.setCircleLocation(position);
+        setAddress(position);
     }
 }

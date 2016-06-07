@@ -36,11 +36,6 @@ module.exports = function (mapService, stateService, currentSession, session, $s
         });
     }
 
-    mapService.requestLocation(function (position) {
-        vm.map.center.longitude = position.longitude;
-        vm.map.center.latitude = position.latitude;
-    });
-
     mapService.on('circleLocationSet', function (position) {
         vm.circleCenter = {
             latitude: position.latitude,
