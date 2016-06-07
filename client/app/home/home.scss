@@ -5,13 +5,14 @@
         position: fixed;
         width: 100%;
         bottom: 0;
-        @media only screen and (min-width : 768px) {
+        @media only screen and (min-width : 992px) {
             top: 60px;
         } 
-        @media only screen and (max-width : 768px) {
+        @media only screen and (max-width : 992px) {
             top: 50px;
         } 
     }
+
 
     .cursive {
         font-family: 'Dancing Script', cursive;
@@ -28,7 +29,7 @@
     }
 
     .full-width-sm{
-        @media only screen and (max-width : 768px) {
+        @media only screen and (max-width : 992px) {
             width: 100%;
         }    
     }
@@ -49,30 +50,5 @@
     .left-panel-xs.collpsed, .left-panel.collapsed{
         width: 80px;
     }
-    
-    .panel{
-        &{
-            background: rgba(0,0,0, .5);
-            border: 1px solid rgba(0, 0, 0, .7);
-            padding: 25px;
-        }
-        
-        *{
-            color: white;
-        }
-        
-        .form-control, .transparent{
-            background: transparent !important;
-            border: 1px solid white;
-        }
-        
-        .collapse-icon{
-            right: 0;
-            top: 0;
-            float: right;
-            cursor: pointer;
-        }
-    }
-    
     
 }

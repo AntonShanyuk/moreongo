@@ -14,6 +14,8 @@ require('./register-service/register-service.scss');
 var registerServiceTemplate = require('./register-service/register-service.html');
 var registerServiceController = require('./register-service/register-service.controller');
 
+var collapsePanelDirective = require('./components/collapse-panel/collapse-panel.directive');
+
 var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'rt.eventemitter', 'ui.utils.masks', 'focusOn', 'ngResource']);
 
 app.config(
@@ -80,3 +82,5 @@ app.service('stateService', stateService);
 
 app.factory('session', session);
 app.factory('organization', organization);
+
+app.directive('collapsePanel', collapsePanelDirective);

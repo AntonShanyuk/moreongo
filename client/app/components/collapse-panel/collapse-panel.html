@@ -1,0 +1,9 @@
+<div class="collapse-panel">
+    <div class="panel">
+        <div ng-click="collapsed = !collapsed;">
+            <i class="glyphicon collapse-icon" ng-class="{'glyphicon-menu-down' : collapsed, 'glyphicon-menu-up' : !collapsed}"></i>
+            <div class="clearfix"></div>
+        </div>
+        <ng-transclude></ng-transclude>
+    </div>
+</div>

@@ -4,7 +4,7 @@ var _ = require('lodash');
 module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization) {
     var vm = this;
 
-    vm.homeState = stateService.home;
+    vm.collapseOptions = { collapsed: false };
     vm.services = [{ name: '', price: 0 }];
 
     vm.addressChanged = function () {
@@ -17,16 +17,16 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
             vm.services.push({ name: '', price: 0 });
         } else if (emptyServices.length > 1) {
             var index = vm.services.indexOf(service);
-            focus((index -1).toString());
+            focus((index - 1).toString());
             vm.services.splice(index, 1);
         }
     }
-    
-    vm.registerService = function(){
+
+    vm.registerService = function () {
         organization.post({
             name: vm.name,
             address: vm.addressObject,
-            services: _.filter(vm.services, function(service){
+            services: _.filter(vm.services, function (service) {
                 return !!service.name;
             }),
             email: vm.email,
