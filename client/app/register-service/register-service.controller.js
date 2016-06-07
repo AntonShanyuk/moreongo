@@ -8,7 +8,7 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
         vm.edit = true;
         vm.address = myOrganization.address[0].formatted_address;
         vm.name = myOrganization.name;
-        vm.services = myOrganization.services.concat([{name: '', price: ''}]);
+        vm.services = myOrganization.services.concat([{ name: '', price: '' }]);
         var location = myOrganization.address[0].geometry.location;
         setAddress({
             latitude: location.lat,
@@ -34,24 +34,26 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
     }
 
     vm.registerService = function () {
+        var promise;
         if (vm.edit) {
-            organization.put({
+            promise = organization.put({
                 _id: myOrganization._id,
                 name: vm.name,
                 services: notEmptyServices(),
                 address: vm.addressObject
-            });
+            }).$promise;
         } else {
-            organization.post({
+            promise = organization.post({
                 name: vm.name,
                 address: vm.addressObject,
                 services: notEmptyServices(),
                 email: vm.email,
                 password: vm.password
-            }).$promise.then(function () {
-                $state.go('home.search', {}, { reload: 'home' });
-            });
+            }).$promise;
         }
+        promise.then(function () {
+            $state.go('home.search', {}, { reload: 'home' });
+        });
     }
 
     mapService.requestLocation(function (position) {
