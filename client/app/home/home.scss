@@ -1,8 +1,22 @@
+@import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
+
 .home-page{
     #map_canvas {
         position: fixed;
-        height: 100%;
         width: 100%;
+        bottom: 0;
+        @media only screen and (min-width : 768px) {
+            top: 60px;
+        } 
+        @media only screen and (max-width : 768px) {
+            top: 50px;
+        } 
+    }
+
+    .cursive {
+        font-family: 'Dancing Script', cursive;
+        text-transform: none;
+        font-size: xx-large;
     }
     
     .angular-google-map-container {
@@ -12,23 +26,11 @@
         right: 0;
         left: 0;
     }
-    
-    .right-panel-xs{
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1;
-    }
-    
-    .right-panel{
-        position: fixed;
-        top: 100px;
-        right: 150px;
-    }
-    
-    .full-width{
-        width: 100%;
+
+    .full-width-sm{
+        @media only screen and (max-width : 768px) {
+            width: 100%;
+        }    
     }
     
     .left-panel-xs{

@@ -12,7 +12,7 @@ class SessionController {
             res.send(body);
         } else {
             this.organizationModel.findOneAsync({ user: req.user.email }).then(organization => {
-                body.organization = organization;
+                body.organizationName = organization.name;
                 res.send(body);
             }).catch(err => {
                 res.status(500).end();

@@ -1,20 +1,61 @@
 <div class="home-page">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><span class="cursive">Moreongo</span></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg" placeholder="Город">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg" placeholder="Услуга">
+                    </div>
+                    <button type="submit" class="btn btn-default btn-lg full-width-sm">Найти</button>
+                </form>
+                <div ng-if="!vm.isAuthenticated">
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <a ui-sref="home.registerService" class="btn btn-lg btn-danger full-width-sm">Добавить мой сервис</a>
+                        </div>
+                    </form>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <a ui-sref="home.login" class="btn btn-lg btn-default full-width-sm">Войти</a>
+                        </div>
+                    </form>
+                </div>
+                <div ng-if="vm.isAuthenticated && vm.organizationName">
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <a ui-sref="home.myService" class="btn btn-lg btn-danger full-width-sm" ng-bind="vm.organizationName"></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
     <div id="map_canvas">
         <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom" options="vm.options">
             <ui-gmap-circle ng-if="vm.circleCenter" center="vm.circleCenter" stroke="vm.circle.stroke" fill="vm.circle.fill" radius="vm.circle.radius"
                 draggable="true" clickable="true" events="vm.circle.events">
             </ui-gmap-circle>
         </ui-gmap-google-map>
-    </div>
-
-    <div>
-        <div class="right-panel-xs visible-sm-block visible-xs-block">
-            <div ui-view='rightPanel'></div>
-        </div>
-        <div class="right-panel visible-md-block visible-lg-block">
-            <div ui-view='rightPanel'></div>
-        </div>
-
     </div>
 
     <div>

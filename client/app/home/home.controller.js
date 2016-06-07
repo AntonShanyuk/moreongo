@@ -1,6 +1,9 @@
  /** @ngInject */
-module.exports = function (mapService, stateService) {
+module.exports = function (mapService, stateService, currentSession) {
     var vm = this;
+    
+    vm.isAuthenticated = currentSession.isAuthenticated;
+    vm.organizationName = currentSession.organizationName;
 
     vm.state = stateService.home;
     vm.map = { center: { latitude:  50.4223541, longitude: 30.5211557 }, zoom: 14 };
