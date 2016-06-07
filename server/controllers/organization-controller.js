@@ -29,6 +29,28 @@ class OrganizationController {
             res.status(500).end();
         });
     }
+
+    putOrganization(req, res){
+        this.organizationModel.findByIdAsync(req.params.id).then(organization => {
+            if(organization.user !== req.user.email){
+                res.status(403).end();
+                return Promise.reject();
+            } 
+            return this.organizationModel.updateAsync(req.body);
+        }).then(() => {
+            res.send({ok: true});
+        }).catch(err => {
+            res.status(500).end();
+        });
+    }
+
+    myOrganization(req, res) {
+        this.organizationModel.findOneAsync({ user: req.user.email }).then(organization => {
+            res.send(organization);
+        }).catch(err => {
+            res.status(500).end();
+        });
+    }
 }
 
 module.exports = OrganizationController;

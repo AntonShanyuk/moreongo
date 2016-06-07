@@ -14,6 +14,9 @@ require('./register-service/register-service.scss');
 var registerServiceTemplate = require('./register-service/register-service.html');
 var registerServiceController = require('./register-service/register-service.controller');
 
+var loginTemplate = require('./login/login.html');
+var loginController = require('./login/login.controller');
+
 var collapsePanelDirective = require('./components/collapse-panel/collapse-panel.directive');
 
 var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'rt.eventemitter', 'ui.utils.masks', 'focusOn', 'ngResource']);
@@ -32,6 +35,16 @@ app.config(
                     /** @ngInject */
                     currentSession: function (session) {
                         return session.get().$promise;
+                    }
+                }
+            })
+            .state('home.login', {
+                url: 'login/',
+                views: {
+                    scroll: {
+                        template: loginTemplate,
+                        controller: loginController,
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -55,6 +68,11 @@ app.config(
                         controller: registerServiceController,
                         controllerAs: 'vm'
                     }
+                },
+                resolve: {
+                    myOrganization: function () {
+                        return null;
+                    }
                 }
             })
             .state('home.myService', {
@@ -64,6 +82,11 @@ app.config(
                         template: registerServiceTemplate,
                         controller: registerServiceController,
                         controllerAs: 'vm'
+                    }
+                },
+                resolve: {
+                    myOrganization: function(organization){
+                        return organization.my().$promise;
                     }
                 }
             });

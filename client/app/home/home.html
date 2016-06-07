@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"><span class="cursive">Moreongo</span></a>
+                <a class="navbar-brand" href="/app/#/"><span class="cursive">Moreongo</span></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -40,6 +40,11 @@
                     <form class="navbar-form navbar-right">
                         <div class="form-group">
                             <a ui-sref="home.myService" class="btn btn-lg btn-danger full-width-sm" ng-bind="vm.organizationName"></a>
+                        </div>
+                    </form>
+                    <form class="navbar-form navbar-right" ng-submit="vm.logout()">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-lg btn-default full-width-sm">Выйти</button>
                         </div>
                     </form>
                 </div>

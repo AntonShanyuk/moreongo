@@ -1,11 +1,22 @@
 var _ = require('lodash');
 
 /** @ngInject */
-module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization) {
+module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization, $state, myOrganization) {
     var vm = this;
 
-    vm.collapseOptions = { collapsed: false };
-    vm.services = [{ name: '', price: 0 }];
+    if (myOrganization) {
+        vm.edit = true;
+        vm.address = myOrganization.address[0].formatted_address;
+        vm.name = myOrganization.name;
+        vm.services = myOrganization.services.concat([{name: '', price: ''}]);
+        var location = myOrganization.address[0].geometry.location;
+        setAddress({
+            latitude: location.lat,
+            longitude: location.lng
+        });
+    } else {
+        vm.services = [{ name: '', price: 0 }];
+    }
 
     vm.addressChanged = function () {
         setPosition(vm.address);
@@ -23,15 +34,24 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
     }
 
     vm.registerService = function () {
-        organization.post({
-            name: vm.name,
-            address: vm.addressObject,
-            services: _.filter(vm.services, function (service) {
-                return !!service.name;
-            }),
-            email: vm.email,
-            password: vm.password
-        });
+        if (vm.edit) {
+            organization.put({
+                _id: myOrganization._id,
+                name: vm.name,
+                services: notEmptyServices(),
+                address: vm.addressObject
+            });
+        } else {
+            organization.post({
+                name: vm.name,
+                address: vm.addressObject,
+                services: notEmptyServices(),
+                email: vm.email,
+                password: vm.password
+            }).$promise.then(function () {
+                $state.go('home.search', {}, { reload: 'home' });
+            });
+        }
     }
 
     mapService.requestLocation(function (position) {
@@ -76,6 +96,12 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
                     })
                 }
             });
+        });
+    }
+
+    function notEmptyServices() {
+        return _.filter(vm.services, function (service) {
+            return !!service.name;
         });
     }
 }

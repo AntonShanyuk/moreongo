@@ -2,8 +2,13 @@
 module.exports = function($resource){
     return $resource('/api/session', {}, {
         get: {
-            method: 'GET',
-            cache: true
+            method: 'GET'
+        },
+        post: {
+            method: 'POST'
+        },
+        delete: {
+            method: 'DELETE'
         }
     });
 }
