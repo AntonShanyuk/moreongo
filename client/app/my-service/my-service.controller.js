@@ -22,6 +22,12 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
         vm.services = [{ name: '', price: 0 }];
     }
 
+    $rootScope.$on('cityChanged', function (event, city) {
+        if (!vm.edit) {
+            vm.address = city;
+        }
+    });
+
     vm.addressChanged = function () {
         setPosition();
     }
