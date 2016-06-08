@@ -21,6 +21,7 @@ var registerServiceMapTemplate = require('./pages/my-service/my-service-map.html
 var registerServiceMapController = require('./pages/my-service/my-service-map.controller');
 
 var collapsePanelDirective = require('./components/collapse-panel/collapse-panel.directive');
+var collapseOnClickDirective = require('./components/nav-collapse-on-click/nav-collapse-on-click.directive');
 
 var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'ui.utils.masks', 'focusOn', 'ngResource']);
 
@@ -116,3 +117,4 @@ app.factory('session', session);
 app.factory('organization', organization);
 
 app.directive('collapsePanel', collapsePanelDirective);
+app.directive('navCollapseOnClick', collapseOnClickDirective);

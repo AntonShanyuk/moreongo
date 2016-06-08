@@ -19,11 +19,11 @@
                     <label>Укажите наименование и стоимость Ваших услуг</label>
 
                     <div class="row services-control-group" ng-repeat="service in vm.services">
-                        <div class="col-xs-8">
+                        <div class="col-xs-7">
                             <input type="text" class="form-control" placeholder="Например, маникюр" ng-model="service.name" ng-change="vm.serviceChange(service)"
                                 focus-on="{{$index}}">
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-5">
                             <div class="input-group">
                                 <input type="text" class="form-control" value="100" ui-number-mask="0" ng-model="service.price" ng-change="vm.serviceChange(service)">
                                 <div class="transparent input-group-addon">грн</div>
