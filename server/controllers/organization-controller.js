@@ -31,13 +31,7 @@ class OrganizationController {
     }
 
     putOrganization(req, res){
-        this.organizationModel.findByIdAsync(req.params.id).then(organization => {
-            if(organization.user !== req.user.email){
-                res.status(403).end();
-                return Promise.reject();
-            } 
-            return this.organizationModel.updateAsync(req.body);
-        }).then(() => {
+        this.organizationModel.updateAsync({_id: req.params.id, user: req.user.email}, req.body).then(() => {
             res.send({ok: true});
         }).catch(err => {
             res.status(500).end();
