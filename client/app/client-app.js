@@ -107,6 +107,21 @@ app.config(
             //    key: 'your api key',
             language: 'uk'
         });
+    }).config(
+    /** @ngInject */
+    function ($httpProvider) {
+        $httpProvider.interceptors.push(function () {
+            return {
+                'request': function (config) {
+                    if (!config.params) {
+                        config.params = {};
+                    }
+
+                    config.params.d = new Date().getTime();
+                    return config;
+                }
+            };
+        })
     });
 
 
