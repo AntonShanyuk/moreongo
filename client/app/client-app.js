@@ -6,19 +6,19 @@ var stateService = require('./services/state.service');
 var organization = require('./api/organization.resource.js');
 var session = require('./api/session.resource.js');
 
-require('./home/home.scss');
-var homeTemplate = require('./home/home.html');
-var homeController = require('./home/home.controller');
+require('./pages/home/home.scss');
+var homeTemplate = require('./pages/home/home.html');
+var homeController = require('./pages/home/home.controller');
 
-require('./my-service/my-service.scss');
-var registerServiceTemplate = require('./my-service/my-service.html');
-var registerServiceController = require('./my-service/my-service.controller');
+require('./pages/my-service/my-service.scss');
+var registerServiceTemplate = require('./pages/my-service/my-service.html');
+var registerServiceController = require('./pages/my-service/my-service.controller');
 
-var loginTemplate = require('./login/login.html');
-var loginController = require('./login/login.controller');
+var loginTemplate = require('./pages/login/login.html');
+var loginController = require('./pages/login/login.controller');
 
-var registerServiceMapTemplate = require('./my-service/my-service-map.html');
-var registerServiceMapController = require('./my-service/my-service-map.controller');
+var registerServiceMapTemplate = require('./pages/my-service/my-service-map.html');
+var registerServiceMapController = require('./pages/my-service/my-service-map.controller');
 
 var collapsePanelDirective = require('./components/collapse-panel/collapse-panel.directive');
 
