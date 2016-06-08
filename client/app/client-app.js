@@ -10,15 +10,15 @@ require('./home/home.scss');
 var homeTemplate = require('./home/home.html');
 var homeController = require('./home/home.controller');
 
-require('./register-service/register-service.scss');
-var registerServiceTemplate = require('./register-service/register-service.html');
-var registerServiceController = require('./register-service/register-service.controller');
+require('./my-service/my-service.scss');
+var registerServiceTemplate = require('./my-service/my-service.html');
+var registerServiceController = require('./my-service/my-service.controller');
 
 var loginTemplate = require('./login/login.html');
 var loginController = require('./login/login.controller');
 
-var registerServiceMapTemplate = require('./register-service/register-service-map.html');
-var registerServiceMapController = require('./register-service/register-service-map.controller');
+var registerServiceMapTemplate = require('./my-service/my-service-map.html');
+var registerServiceMapController = require('./my-service/my-service-map.controller');
 
 var collapsePanelDirective = require('./components/collapse-panel/collapse-panel.directive');
 
