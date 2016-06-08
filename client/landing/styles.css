@@ -15,8 +15,8 @@ body {
 }
 
 @media(min-width:992px) {
-    #city, #service{
-        width: 400px;
+    #city, #service, .tt-hint{
+        width: 400px !important;
     }
 }
 
