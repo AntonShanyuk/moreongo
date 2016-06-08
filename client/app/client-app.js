@@ -113,11 +113,14 @@ app.config(
         $httpProvider.interceptors.push(function () {
             return {
                 'request': function (config) {
-                    if (!config.params) {
-                        config.params = {};
+                    if (config.method == 'GET') {
+                        if (!config.params) {
+                            config.params = {};
+                        }
+
+                        config.params.d = new Date().getTime();
                     }
 
-                    config.params.d = new Date().getTime();
                     return config;
                 }
             };
