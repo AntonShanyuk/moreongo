@@ -1,3 +1,7 @@
+function initMap() {
+    window.geocoder = new google.maps.Geocoder();
+}
+
 (function ($) {
     "use strict";
 
@@ -45,7 +49,21 @@
     $('#city').typeahead(null, {
         name: 'cities',
         display: 'text',
-        source: cities
+        source: $.debounce(300, function (query, sync, async) {
+            if (!window.geocoder) {
+                return;
+            };
+            window.geocoder.geocode({ 'address': query }, function (results) {
+                var cities = [];
+                for (var i in results) {
+                    var result = results[i];
+                    if (result.types.indexOf('locality') != -1) {
+                        cities.push({ text: result.formatted_address });
+                    }
+                }
+                async(cities)
+            });
+        })
     }).on('typeahead:select', function (e, obj) {
         selectedCity = obj;
     });
@@ -70,12 +88,10 @@
     $('.start-form').submit(function (e) {
         var params = [];
         var dirtyService = $('#service').val();
-        var dirtyCity = $('#city').val();
+        var city = $('#city').val();
 
-        if (dirtyCity && (!selectedCity || dirtyCity != selectedCity.text)) {
-            params.push('city=' + dirtyCity);
-        } else if (selectedCity) {
-            params.push('cityId=' + selectedCity.id);
+        if (city) {
+            params.push('city=' + encodeURIComponent(city));
         }
 
         if (dirtyService && (!selectedService || dirtyService != selectedService.text)) {
@@ -83,10 +99,10 @@
         } else if (selectedService) {
             params.push('serviceId=' + selectedService.id);
         }
-        
-        var query = params.length ?  params.join('&') : '';
+
+        var query = params.length ? params.join('&') : '';
         window.location = '/app/#/?' + query;
-        
+
         e.preventDefault();
     });
 

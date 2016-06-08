@@ -1,6 +1,25 @@
 @import url(https://fonts.googleapis.com/css?family=Dancing+Script:700);
 
 .home-page{
+    .navbar{
+        .input-transparent{
+            background: transparent;
+            color: white;
+            @media only screen and (min-width : 992px) and (max-width: 1099px){
+                width: 250px;
+            }
+            @media only screen and (min-width : 1100px)  and (max-width: 1299px) {
+                width: 300px;
+            }
+            @media only screen and (min-width : 1300px)   and (max-width: 1499px){
+                width: 400px;
+            } 
+            @media only screen and (min-width : 1500px){
+                width: 500px;
+            } 
+        }
+    }
+
     #map_canvas {
         position: fixed;
         width: 100%;
@@ -70,5 +89,4 @@
     .left-panel-xs.collpsed, .left-panel.collapsed{
         width: 80px;
     }
-    
 }

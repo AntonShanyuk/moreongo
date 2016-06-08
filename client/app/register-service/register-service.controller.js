@@ -1,26 +1,29 @@
 var _ = require('lodash');
 
 /** @ngInject */
-module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization, $state, myOrganization) {
+module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization, $state, myOrganization, $stateParams) {
     var vm = this;
 
     if (myOrganization) {
+        console.log(myOrganization);
         vm.edit = true;
-        vm.address = myOrganization.address[0].formatted_address;
+        vm.address = myOrganization.address.formatted_address;
         vm.name = myOrganization.name;
         vm.services = myOrganization.services.concat([{ name: '', price: '' }]);
-        var location = myOrganization.address[0].geometry.location;
-        initMapPosition({
-            latitude: location.lat,
-            longitude: location.lng
-        });
+        setPosition();
     } else {
-        mapService.requestLocation(initMapPosition);
+        if($stateParams.city){
+            vm.address = $stateParams.city;
+            setPosition();
+        } else {
+            mapService.requestLocation(initMapPosition);
+        }
+        
         vm.services = [{ name: '', price: 0 }];
     }
 
     vm.addressChanged = function () {
-        setPosition(vm.address);
+        setPosition();
     }
 
     vm.serviceChange = function (service) {
@@ -62,38 +65,20 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
     });
 
     function setAddress(position) {
-        uiGmapGoogleMapApi.then(function (maps) {
-            var geocoder = new maps.Geocoder();
-            geocoder.geocode({
-                location: {
-                    lat: position.latitude,
-                    lng: position.longitude
-                }
-            }, function (address) {
-                if (address && address.length) {
-                    vm.address = address[0].formatted_address;
-                    vm.addressObject = address;
-                    focus('name');
-                    $scope.$apply();
-                }
-            });
+        mapService.getAddress(position).then(function (address) {
+            vm.address = address.formatted_address;
+            vm.addressObject = address;
+            focus('name');
         });
     }
 
-    function setPosition(address) {
-        uiGmapGoogleMapApi.then(function (maps) {
-            var geocoder = new maps.Geocoder();
-            geocoder.geocode({
-                address: address
-            }, function (position) {
-                if (position && position.length) {
-                    var location = position[0].geometry.location;
-                    vm.addressObject = position;
-                    mapService.setCircleLocation({
-                        latitude: location.lat(),
-                        longitude: location.lng()
-                    });
-                }
+    function setPosition() {
+        mapService.getPosition(vm.address).then(function (position) {
+            var location = position.geometry.location;
+            vm.addressObject = position;
+            mapService.setCircleLocation({
+                latitude: location.lat(),
+                longitude: location.lng()
             });
         });
     }

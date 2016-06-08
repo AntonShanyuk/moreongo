@@ -10,18 +10,6 @@ class ApiRoutes {
     }
 
     init(expressApp) {
-        expressApp.get('/api/cities/:term?', (req, res) => {
-            res.send([
-                {
-                    id: 1,
-                    text: 'Киев'
-                }, {
-                    id: 2,
-                    text: 'Житомир'
-                }
-            ]);
-        });
-
         expressApp.get('/api/services/:term?', (req, res) => {
             res.send([
                 {

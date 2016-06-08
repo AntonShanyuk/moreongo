@@ -26,7 +26,7 @@ app.config(
     function ($stateProvider) {
         $stateProvider
             .state('home', {
-                url: '/',
+                url: '/?city&service&serviceId',
                 abstract: true,
                 template: homeTemplate,
                 controller: homeController,
@@ -49,7 +49,7 @@ app.config(
                 }
             })
             .state('home.search', {
-                url: '?city&cityId&service&serviceId',
+                url: '',
                 views: {
                     scroll: {}
                 },

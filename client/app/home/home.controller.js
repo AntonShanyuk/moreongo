@@ -1,12 +1,14 @@
 /** @ngInject */
-module.exports = function (mapService, stateService, currentSession, session, $state) {
+module.exports = function (mapService, stateService, currentSession, session, $state, $stateParams) {
     var vm = this;
 
+    vm.map = { center: { latitude: 50.4223541, longitude: 30.5211557 }, zoom: 14 };
+
+    vm.city = $stateParams.city;
     vm.isAuthenticated = currentSession.isAuthenticated;
     vm.organizationName = currentSession.organizationName;
 
     vm.state = stateService.home;
-    vm.map = { center: { latitude: 50.4223541, longitude: 30.5211557 }, zoom: 14 };
 
     vm.options = { scrollwheel: false };
     vm.circle = {
@@ -29,6 +31,17 @@ module.exports = function (mapService, stateService, currentSession, session, $s
             }
         }
     };
+
+    vm.changeCity = function(){
+        mapService.getPosition(vm.city).then(function(position){
+            var location = position.geometry.location;
+            vm.map.center = {
+                latitude: location.lat(),
+                longitude: location.lng()
+            }
+        });
+    }
+    vm.changeCity();
 
     vm.logout = function () {
         session.delete().$promise.then(function () {
