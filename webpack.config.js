@@ -5,7 +5,7 @@ var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 
 module.exports = {
     debug: true,
-    devtool: 'source-map',
+    devtool: 'eval',
     resolve: {
         modulesDirectories: ["client/bower_components", 'node_modules']
     },
@@ -22,7 +22,7 @@ module.exports = {
         ignoreCustomFragments: [/\{\{.*?}}/]
     },
     entry: {
-        'vendor-bundle': ['jquery', 'lodash', 'angular', 'angular-simple-logger', 'angular-google-maps', 'angular-ui-router', 'bootstrap-loader', 'angular-tiny-eventemitter',
+        'vendor-bundle': ['jquery', 'lodash', 'angular', 'angular-simple-logger', 'angular-google-maps', 'angular-ui-router', 'bootstrap-loader',
             'angular-input-masks', 'ng-focus-on', 'angular-resource'],
         'app-bundle': './client/app/client-app.js'
     },

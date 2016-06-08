@@ -1,5 +1,5 @@
 /** @ngInject */
-module.exports = function (mapService, stateService, currentSession, session, $state, $stateParams) {
+module.exports = function (mapService, stateService, currentSession, session, $state, $stateParams, $rootScope) {
     var vm = this;
 
     vm.map = { center: { latitude: 50.4223541, longitude: 30.5211557 }, zoom: 14 };
@@ -11,26 +11,6 @@ module.exports = function (mapService, stateService, currentSession, session, $s
     vm.state = stateService.home;
 
     vm.options = { scrollwheel: false };
-    vm.circle = {
-        radius: 150,
-        stroke: {
-            color: '#08B21F',
-            weight: 2,
-            opacity: 1
-        },
-        fill: {
-            color: '#08B21F',
-            opacity: 0.5
-        },
-        events: {
-            dragend: function (circle) {
-                mapService.userChangedCircleLocation({
-                    latitude: circle.center.lat(),
-                    longitude: circle.center.lng()
-                });
-            }
-        }
-    };
 
     vm.changeCity = function(){
         mapService.getPosition(vm.city).then(function(position){
@@ -49,18 +29,10 @@ module.exports = function (mapService, stateService, currentSession, session, $s
         });
     }
 
-    mapService.on('circleLocationSet', function (position) {
-        vm.circleCenter = {
-            latitude: position.latitude,
-            longitude: position.longitude
-        };
+    $rootScope.$on('mapCenterSet', function(event, position){
         vm.map.center = {
             latitude: position.latitude,
             longitude: position.longitude
         };
-    });
-
-    mapService.on('circleRemoved', function () {
-        vm.circleCenter = null;
     });
 }

@@ -1,15 +1,7 @@
 /** @ngInject */
-module.exports = function ($window, eventEmitter, uiGmapGoogleMapApi, $q) {
-    eventEmitter.inject(this);
+module.exports = function ($window, uiGmapGoogleMapApi, $q) {
 
     var that = this;
-    this.setCircleLocation = function (position) {
-        that.emit('circleLocationSet', position);
-    }
-
-    this.removeCircle = function () {
-        that.emit('circleRemoved');
-    }
 
     this.requestLocation = function (callback) {
         if ($window.navigator.geolocation) {
@@ -17,10 +9,6 @@ module.exports = function ($window, eventEmitter, uiGmapGoogleMapApi, $q) {
                 callback(position.coords);
             });
         }
-    }
-
-    this.userChangedCircleLocation = function (position) {
-        that.emit('circleLocationChanged', position);
     }
 
     this.getAddress = function (position) {
@@ -34,7 +22,6 @@ module.exports = function ($window, eventEmitter, uiGmapGoogleMapApi, $q) {
                         lng: position.longitude
                     }
                 }, function (address, status) {
-                    console.log(status);
                     if (address && address.length) {
                         resolve(address[0]);
                     } else {

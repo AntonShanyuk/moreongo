@@ -17,9 +17,12 @@ var registerServiceController = require('./register-service/register-service.con
 var loginTemplate = require('./login/login.html');
 var loginController = require('./login/login.controller');
 
+var registerServiceMapTemplate = require('./register-service/register-service-map.html');
+var registerServiceMapController = require('./register-service/register-service-map.controller');
+
 var collapsePanelDirective = require('./components/collapse-panel/collapse-panel.directive');
 
-var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'rt.eventemitter', 'ui.utils.masks', 'focusOn', 'ngResource']);
+var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'ui.utils.masks', 'focusOn', 'ngResource']);
 
 app.config(
     /** @ngInject */
@@ -45,19 +48,15 @@ app.config(
                         template: loginTemplate,
                         controller: loginController,
                         controllerAs: 'vm'
-                    }
+                    },
+                    map: {}
                 }
             })
             .state('home.search', {
                 url: '',
                 views: {
-                    scroll: {}
-                },
-                resolve: {
-                    /** @ngInject */
-                    init: function (mapService) {
-                        mapService.removeCircle();
-                    }
+                    scroll: {},
+                    map: {}
                 }
             })
             .state('home.registerService', {
@@ -66,6 +65,11 @@ app.config(
                     scroll: {
                         template: registerServiceTemplate,
                         controller: registerServiceController,
+                        controllerAs: 'vm'
+                    },
+                    map: {
+                        template: registerServiceMapTemplate,
+                        controller: registerServiceMapController,
                         controllerAs: 'vm'
                     }
                 },
@@ -82,10 +86,15 @@ app.config(
                         template: registerServiceTemplate,
                         controller: registerServiceController,
                         controllerAs: 'vm'
+                    },
+                    map: {
+                        template: registerServiceMapTemplate,
+                        controller: registerServiceMapController,
+                        controllerAs: 'vm'
                     }
                 },
                 resolve: {
-                    myOrganization: function(organization){
+                    myOrganization: function (organization) {
                         return organization.my().$promise;
                     }
                 }

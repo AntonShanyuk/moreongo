@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 /** @ngInject */
-module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization, $state, myOrganization, $stateParams) {
+module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization, $state, myOrganization, $stateParams, $rootScope) {
     var vm = this;
 
     if (myOrganization) {
@@ -12,13 +12,13 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
         vm.services = myOrganization.services.concat([{ name: '', price: '' }]);
         setPosition();
     } else {
-        if($stateParams.city){
+        if ($stateParams.city) {
             vm.address = $stateParams.city;
             setPosition();
         } else {
             mapService.requestLocation(initMapPosition);
         }
-        
+
         vm.services = [{ name: '', price: 0 }];
     }
 
@@ -60,7 +60,7 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
         });
     }
 
-    mapService.on('circleLocationChanged', function (position) {
+    $rootScope.$on('registrationCircleDragged', function (event, position) {
         setAddress(position);
     });
 
@@ -76,7 +76,7 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
         mapService.getPosition(vm.address).then(function (position) {
             var location = position.geometry.location;
             vm.addressObject = position;
-            mapService.setCircleLocation({
+            $scope.$emit('registrationCircleSet', {
                 latitude: location.lat(),
                 longitude: location.lng()
             });
@@ -90,7 +90,7 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
     }
 
     function initMapPosition(position) {
-        mapService.setCircleLocation(position);
+        $scope.$emit('registrationCircleSet', position);
         setAddress(position);
     }
 }

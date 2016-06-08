@@ -57,9 +57,7 @@
 
     <div id="map_canvas">
         <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom" options="vm.options">
-            <ui-gmap-circle ng-if="vm.circleCenter" center="vm.circleCenter" stroke="vm.circle.stroke" fill="vm.circle.fill" radius="vm.circle.radius"
-                draggable="true" clickable="true" events="vm.circle.events">
-            </ui-gmap-circle>
+            <div ui-view="map"></div>
         </ui-gmap-google-map>
     </div>
 
