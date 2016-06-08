@@ -21,10 +21,10 @@ class ExpressWrapper {
     init() {
         let app = express();
 
-        app.use('/client', express.static(path.join(__dirname, '../client')));
-        app.use('/app', express.static(path.join(__dirname, '../client/app/build')));
+        app.use('/client', express.static(path.join(__dirname, '../../client')));
+        app.use('/app', express.static(path.join(__dirname, '../../client/app/build')));
         app.get('/', (req, res) => {
-            res.sendFile(path.join(__dirname, '../client/landing/index.html'));
+            res.sendFile(path.join(__dirname, '../../client/landing/index.html'));
         });
         
         app.use(bodyParser.json());

@@ -2,12 +2,12 @@ var Bottle = require('bottlejs');
 
 var config = require('./config');
 
-var orgnaizationModel = require('./models/organization.model');
-var userModel = require('./models/user.model');
-var ExpressWrapper = require('./express-wrapper');
-var OrganizationController = require('./controllers/organization-controller');
-var SessionController = require('./controllers/session-controller');
-var ApiRoutes = require('./api-routes');
+var orgnaizationModel = require('./lib/models/organization.model');
+var userModel = require('./lib/models/user.model');
+var ExpressWrapper = require('./lib/express-wrapper');
+var OrganizationController = require('./lib/controllers/organization-controller');
+var SessionController = require('./lib/controllers/session-controller');
+var ApiRoutes = require('./lib/api-routes');
 
 var bottle = new Bottle();
 
