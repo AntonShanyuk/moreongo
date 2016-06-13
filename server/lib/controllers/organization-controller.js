@@ -20,6 +20,7 @@ class OrganizationController {
             return this.organizationModel.createAsync({
                 name: req.body.name,
                 address: req.body.address,
+                location: req.body.location,
                 services: req.body.services,
                 user: req.body.email
             });
@@ -31,8 +32,8 @@ class OrganizationController {
     }
 
     putOrganization(req, res) {
-        this.organizationModel.updateAsync({ _id: req.params.id, user: req.user.email }, req.body).then(() => {
-            res.send({ ok: true });
+        this.organizationModel.updateAsync({ _id: req.params.id, user: req.user.email }, req.body).then(organization => {
+            res.send(organization);
         }).catch(err => {
             res.status(500).end();
         });
@@ -57,7 +58,7 @@ class OrganizationController {
             map: function () {
                 for (var i = 0; i < this.services.length; i++) {
                     var service = this.services[i];
-                    if(regex.test(service.name)){
+                    if (regex.test(service.name)) {
                         emit(service.name, 1);
                     }
                 }
@@ -83,6 +84,30 @@ class OrganizationController {
         }).catch(err => {
             console.log(err);
             res.status(500).end();
+        });
+    }
+
+    geoFind(req, res) {
+        var query = {
+            location: {
+                $near: [req.params.lng, req.params.lat],
+                $maxDistance: 1
+            }
+        }
+
+        if (req.query.service) {
+            query.services = {
+                $elemMatch: {
+                    name: {
+                        $regex: `^${req.query.service}`,
+                        $options: 'i'
+                    }
+                }
+            }
+        }
+
+        this.organizationModel.findAsync(query).then(results => {
+            res.send(results);
         });
     }
 }

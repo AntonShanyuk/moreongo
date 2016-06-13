@@ -10,7 +10,8 @@ class ApiRoutes {
     }
 
     init(expressApp) {
-        expressApp.get('/api/services/:term?', (req, res) => {
+
+        expressApp.get('/api/services/:term*', (req, res) => {
             this.organizationController.searchServices(req, res);
         });
 
@@ -37,6 +38,10 @@ class ApiRoutes {
 
         expressApp.get('/api/my-organization', ensureAuthenticated, (req, res) => {
             this.organizationController.myOrganization(req, res);
+        });
+
+        expressApp.get('/api/organizations/:lng/:lat', (req, res) => {
+            this.organizationController.geoFind(req, res);
         });
 
         function ensureAuthenticated(req, res, next) {
