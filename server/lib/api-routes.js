@@ -11,15 +11,7 @@ class ApiRoutes {
 
     init(expressApp) {
         expressApp.get('/api/services/:term?', (req, res) => {
-            res.send([
-                {
-                    id: 1,
-                    text: 'Стрижка мужская'
-                }, {
-                    id: 2,
-                    text: 'Стрижка женская'
-                }
-            ]);
+            this.organizationController.searchServices(req, res);
         });
 
         expressApp.get('/api/session', (req, res) => {

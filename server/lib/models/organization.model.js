@@ -6,7 +6,7 @@ var Promise = require('bluebird');
 var model = mongoose.model('organization', {
     name: String,
     address: {},
-    services: [{ name: String, price: Number }],
+    services: [{ name: {type: String, index: true}, price: Number }],
     user: String
 });
 

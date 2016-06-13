@@ -30,9 +30,9 @@ class OrganizationController {
         });
     }
 
-    putOrganization(req, res){
-        this.organizationModel.updateAsync({_id: req.params.id, user: req.user.email}, req.body).then(() => {
-            res.send({ok: true});
+    putOrganization(req, res) {
+        this.organizationModel.updateAsync({ _id: req.params.id, user: req.user.email }, req.body).then(() => {
+            res.send({ ok: true });
         }).catch(err => {
             res.status(500).end();
         });
@@ -42,6 +42,46 @@ class OrganizationController {
         this.organizationModel.findOneAsync({ user: req.user.email }).then(organization => {
             res.send(organization);
         }).catch(err => {
+            res.status(500).end();
+        });
+    }
+
+    searchServices(req, res) {
+        var regexStr = `^${req.params.term}`;
+        var regexOptions = 'i';
+        var regex = new RegExp(regexStr, regexOptions);
+        this.organizationModel.mapReduceAsync({
+            scope: {
+                regex: regex
+            },
+            map: function () {
+                for (var i = 0; i < this.services.length; i++) {
+                    var service = this.services[i];
+                    if(regex.test(service.name)){
+                        emit(service.name, 1);
+                    }
+                }
+            },
+            reduce: function (key, values) {
+                return Array.sum(values);
+            },
+            out: {
+                inline: true
+            },
+            query: {
+                services: {
+                    $elemMatch: {
+                        name: {
+                            $regex: regexStr,
+                            $options: regexOptions
+                        }
+                    }
+                }
+            }
+        }).then(results => {
+            res.send(results);
+        }).catch(err => {
+            console.log(err);
             res.status(500).end();
         });
     }

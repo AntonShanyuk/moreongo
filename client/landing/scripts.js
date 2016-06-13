@@ -35,8 +35,6 @@ function initMap() {
         $('#galleryImage').attr("src", $(e.relatedTarget).data("src"));
     });
 
-    var selectedCity, selectedService, dirtyCity, dirtyService;
-
     var cities = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -64,12 +62,10 @@ function initMap() {
                 async(cities)
             });
         })
-    }).on('typeahead:select', function (e, obj) {
-        selectedCity = obj;
     });
 
     var services = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         remote: {
             url: '/api/services/%term',
@@ -79,25 +75,21 @@ function initMap() {
 
     $('#service ').typeahead(null, {
         name: 'services',
-        display: 'text',
+        display: '_id',
         source: services
-    }).on('typeahead:select', function (e, obj) {
-        selectedService = obj;
     });
 
     $('.start-form').submit(function (e) {
         var params = [];
-        var dirtyService = $('#service').val();
+        var service = $('#service').val();
         var city = $('#city').val();
 
         if (city) {
             params.push('city=' + encodeURIComponent(city));
         }
 
-        if (dirtyService && (!selectedService || dirtyService != selectedService.text)) {
-            params.push('service=' + dirtyService);
-        } else if (selectedService) {
-            params.push('serviceId=' + selectedService.id);
+        if (service) {
+            params.push('service=' + encodeURIComponent(service));
         }
 
         var query = params.length ? params.join('&') : '';
