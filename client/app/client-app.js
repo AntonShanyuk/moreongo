@@ -30,7 +30,7 @@ app.config(
     function ($stateProvider) {
         $stateProvider
             .state('home', {
-                url: '/?city&service&serviceId',
+                url: '/?city&service',
                 abstract: true,
                 template: homeTemplate,
                 controller: homeController,

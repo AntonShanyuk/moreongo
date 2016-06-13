@@ -5,6 +5,7 @@ module.exports = function (mapService, stateService, currentSession, session, $s
     vm.map = { center: { latitude: 50.4223541, longitude: 30.5211557 }, zoom: 14 };
 
     vm.city = $stateParams.city;
+    vm.service = $stateParams.service;
     vm.isAuthenticated = currentSession.isAuthenticated;
     vm.organizationName = currentSession.organizationName;
 
@@ -23,6 +24,11 @@ module.exports = function (mapService, stateService, currentSession, session, $s
         });
     }
     vm.changeCity();
+
+    vm.changeService = function(){
+        $scope.$emit('serviceChanged', vm.service);
+    }
+    vm.changeService();
 
     vm.logout = function () {
         session.delete().$promise.then(function () {
