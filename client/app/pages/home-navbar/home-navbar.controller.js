@@ -4,8 +4,6 @@ module.exports = function (mapService, currentSession, session, $state, $scope, 
     vm.isAuthenticated = currentSession.isAuthenticated;
     vm.organizationName = currentSession.organizationName;
 
-    vm.options = { scrollwheel: false };
-
     vm.changeCity = function () {
         $state.go('home.map.search', { city: vm.city });
     }

@@ -3,8 +3,13 @@
         <form ng-submit="vm.registerService();">
             <div class="form-group-lg control-group">
                 <label for="location">Введите Ваш адрес или перетащите точку на карте</label>
-                <input type="text" class="form-control" id="location" placeholder="Введите Ваш адрес" ng-model="vm.address" ng-change="vm.addressChanged()"
-                    ng-model-options='{ debounce: 400 }'>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="location" placeholder="Введите Ваш адрес" ng-model="vm.address" ng-change="vm.addressChanged()"
+                        ng-model-options='{ debounce: 400 }'>
+                    <span class="input-group-btn">
+                        <button class="btn btn-lg transparent" type="button" ng-click="vm.requestLocation();"><span class="glyphicon glyphicon-screenshot"></span></button>
+                    </span>
+                </div>
             </div>
 
             <div panel-collapse>

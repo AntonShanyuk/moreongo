@@ -36,6 +36,15 @@ module.exports = function (mapService, $scope, focus, organization, $state, myOr
         }
     }
 
+    vm.requestLocation = function () {
+        mapService.requestLocation().then(function (location) {
+            $scope.$emit('mapCenterSet', location);
+            return mapService.getAddress(location);
+        }).then(function (address) {
+            $scope.$emit('cityChanged', address.formatted_address);
+        });
+    }
+
     vm.registerService = function () {
         var promise;
         if (vm.edit) {
