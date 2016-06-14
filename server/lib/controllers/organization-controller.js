@@ -82,7 +82,6 @@ class OrganizationController {
         }).then(results => {
             res.send(results);
         }).catch(err => {
-            console.log(err);
             res.status(500).end();
         });
     }

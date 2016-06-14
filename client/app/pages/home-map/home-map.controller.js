@@ -4,16 +4,18 @@
 module.exports = function ($rootScope, $scope, $stateParams, location, debounce, $timeout) {
     var vm = this;
 
-    vm.map = { center: location, zoom: 14 };
+    vm.map = { center: location, zoom: location.zoom || 14 };
     vm.map.events = {
         center_changed: debounce(function (map) {
             $scope.$emit('mapBoundsChanged', {
                 latitude: map.center.lat(),
                 longitude: map.center.lng()
             });
+        }, 200),
+        zoom_changed: debounce(function (map) {
+            $scope.$emit('mapZoomChanged', map.zoom);
         }, 200)
     }
-
     $rootScope.$on('mapCenterSet', function (event, position) {
         vm.map.center = {
             latitude: position.latitude,

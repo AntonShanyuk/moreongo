@@ -25,122 +25,134 @@ var searchController = require('../pages/search/search.controller');
 var searchMapTemplate = require('../pages/search/search-map.html');
 var searchMapController = require('../pages/search/search-map.controller');
 
-module.exports =
+/** @ngInject */
+module.exports = function ($stateProvider, $urlRouterProvider) {
+    $stateProvider
+        .state('home', {
+            abstract: true,
+            template: homeTemplate,
+            controller: homeController,
+            controllerAs: 'vm',
+            resolve: {
+                /** @ngInject */
+                currentSession: function (session) {
+                    return session.get().$promise;
+                }
+            }
+        })
+        .state('home.map', {
+            abstract: true,
+            url: '/?city&service&lat&lng&zoom',
+            template: homeMapTemplate,
+            controller: homeMapController,
+            controllerAs: 'vm',
+            resolve: {
+                /** @ngInject */
+                defaultData: function (defaults) {
+                    return defaults.get().$promise;
+                },
+                /** @ngInject */
+                location: resolveLocation
+            }
+        })
+        .state('home.map.login', {
+            url: 'login/',
+            views: {
+                scroll: {
+                    template: loginTemplate,
+                    controller: loginController,
+                    controllerAs: 'vm'
+                },
+                map: {}
+            }
+        })
+        .state('home.map.search', {
+            url: '',
+            views: {
+                scroll: {
+                    template: searchTemplate,
+                    controller: searchController,
+                    controllerAs: 'vm'
+                },
+                map: {
+                    template: searchMapTemplate,
+                    controller: searchMapController,
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+                location: resolveLocation,
+                /** @ngInject */
+                organizations: function ($stateParams, location, organization) {
+                    return organization.search({
+                        lat: location.latitude,
+                        lng: location.longitude,
+                        service: $stateParams.service
+                    }).$promise;
+                }
+            }
+        })
+        .state('home.map.registerService', {
+            url: 'register-service/',
+            views: {
+                scroll: {
+                    template: registerServiceTemplate,
+                    controller: registerServiceController,
+                    controllerAs: 'vm'
+                },
+                map: {
+                    template: registerServiceMapTemplate,
+                    controller: registerServiceMapController,
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+                myOrganization: function () {
+                    return null;
+                }
+            }
+        })
+        .state('home.map.myService', {
+            url: 'my-service/',
+            views: {
+                scroll: {
+                    template: registerServiceTemplate,
+                    controller: registerServiceController,
+                    controllerAs: 'vm'
+                },
+                map: {
+                    template: registerServiceMapTemplate,
+                    controller: registerServiceMapController,
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+                /** @ngInject */
+                myOrganization: function (organization) {
+                    return organization.my().$promise;
+                }
+            }
+        });
+
+
     /** @ngInject */
-    function ($stateProvider, $urlRouterProvider) {
-        $stateProvider
-            .state('home', {
-                abstract: true,
-                template: homeTemplate,
-                controller: homeController,
-                controllerAs: 'vm',
-                resolve: {
-                    /** @ngInject */
-                    currentSession: function (session) {
-                        return session.get().$promise;
-                    }
-                }
-            })
-            .state('home.map', {
-                abstract: true,
-                url: '/?city&service',
-                template: homeMapTemplate,
-                controller: homeMapController,
-                controllerAs: 'vm',
-                resolve: {
-                    /** @ngInject */
-                    defaultData: function (defaults) {
-                        return defaults.get().$promise;
-                    },
-                    /** @ngInject */
-                    location: function ($stateParams, mapService, defaultData) {
-                        if ($stateParams.city) {
-                            return mapService.getPosition($stateParams.city).then(function (location) {
-                                return {
-                                    latitude: location.lat(),
-                                    longitude: location.lng()
-                                };
-                            });
-                        } else {
-                            return defaultData.location;
-                        }
-                    }
-                }
-            })
-            .state('home.map.login', {
-                url: 'login/',
-                views: {
-                    scroll: {
-                        template: loginTemplate,
-                        controller: loginController,
-                        controllerAs: 'vm'
-                    },
-                    map: {}
-                }
-            })
-            .state('home.map.search', {
-                url: '',
-                views: {
-                    scroll: {
-                        template: searchTemplate,
-                        controller: searchController,
-                        controllerAs: 'vm'
-                    },
-                    map: {
-                        template: searchMapTemplate,
-                        controller: searchMapController,
-                        controllerAs: 'vm'
-                    }
-                },
-                resolve: {
-                    organizations: function ($stateParams, location, organization) {
-                        return organization.search({
-                            lat: location.latitude,
-                            lng: location.longitude,
-                            service: $stateParams.service
-                        }).$promise;
-                    }
-                }
-            })
-            .state('home.map.registerService', {
-                url: 'register-service/',
-                views: {
-                    scroll: {
-                        template: registerServiceTemplate,
-                        controller: registerServiceController,
-                        controllerAs: 'vm'
-                    },
-                    map: {
-                        template: registerServiceMapTemplate,
-                        controller: registerServiceMapController,
-                        controllerAs: 'vm'
-                    }
-                },
-                resolve: {
-                    myOrganization: function () {
-                        return null;
-                    }
-                }
-            })
-            .state('home.map.myService', {
-                url: 'my-service/',
-                views: {
-                    scroll: {
-                        template: registerServiceTemplate,
-                        controller: registerServiceController,
-                        controllerAs: 'vm'
-                    },
-                    map: {
-                        template: registerServiceMapTemplate,
-                        controller: registerServiceMapController,
-                        controllerAs: 'vm'
-                    }
-                },
-                resolve: {
-                    myOrganization: function (organization) {
-                        return organization.my().$promise;
-                    }
-                }
+    function resolveLocation($stateParams, mapService, defaultData) {
+        if ($stateParams.lat && $stateParams.lng && $stateParams.zoom) {
+            return {
+                latitude: Number($stateParams.lat),
+                longitude: Number($stateParams.lng),
+                zoom: Number($stateParams.zoom)
+            }
+        } else if ($stateParams.city) {
+            return mapService.getPosition($stateParams.city).then(function (location) {
+                return {
+                    latitude: location.lat(),
+                    longitude: location.lng()
+                };
             });
-        $urlRouterProvider.otherwise('/');
-    };
+        } else {
+            return defaultData.location;
+        }
+    }
+    $urlRouterProvider.otherwise('/');
+};
