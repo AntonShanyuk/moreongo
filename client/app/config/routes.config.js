@@ -1,8 +1,8 @@
 'use strict';
 
-require('../pages/home/home.scss');
-var homeTemplate = require('../pages/home/home.html');
-var homeController = require('../pages/home/home.controller');
+require('../pages/home-navbar/home-navbar.scss');
+var homeNavbarTemplate = require('../pages/home-navbar/home-navbar.html');
+var homeNavbarController = require('../pages/home-navbar/home-navbar.controller');
 
 require('../pages/home-map/home-map.scss');
 var homeMapTemplate = require('../pages/home-map/home-map.html');
@@ -30,8 +30,8 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('home', {
             abstract: true,
-            template: homeTemplate,
-            controller: homeController,
+            template: homeNavbarTemplate,
+            controller: homeNavbarController,
             controllerAs: 'vm',
             resolve: {
                 /** @ngInject */
