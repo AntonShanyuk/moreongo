@@ -7,7 +7,7 @@ module.exports = function (session, $state) {
             email: vm.email,
             password: vm.password
         }).$promise.then(function () {
-            $state.go('home.search', {}, { reload: 'home' });
+            $state.go('home.map.search', {}, { reload: 'home' });
         });
     }
 }

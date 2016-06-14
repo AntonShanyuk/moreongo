@@ -3,11 +3,17 @@ module.exports = function ($window, uiGmapGoogleMapApi, $q) {
 
     var that = this;
 
-    this.requestLocation = function (callback) {
+    this.requestLocation = function () {
         if ($window.navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                callback(position.coords);
+            return $q(function (resolve, reject) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    resolve(position.coords);
+                }, function () {
+                    reject();
+                });
             });
+        } else {
+            return reject();
         }
     }
 
@@ -40,7 +46,7 @@ module.exports = function ($window, uiGmapGoogleMapApi, $q) {
                     address: address
                 }, function (position) {
                     if (position && position.length) {
-                        resolve(position[0]);
+                        resolve(position[0].geometry.location);
                     } else {
                         reject();
                     }

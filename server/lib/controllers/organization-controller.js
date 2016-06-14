@@ -91,7 +91,7 @@ class OrganizationController {
         var query = {
             location: {
                 $near: [req.params.lng, req.params.lat],
-                $maxDistance: 1
+                $maxDistance: 0.3
             }
         }
 

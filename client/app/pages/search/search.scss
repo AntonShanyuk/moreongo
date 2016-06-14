@@ -1,0 +1,22 @@
+.search-page{
+    .org-panel{
+        margin-bottom: 20px;
+        font-size: large;
+        hr{
+            margin-top: 0;
+        }
+        .service{
+            margin-bottom: 10px; 
+        }
+        &.highlight{
+            display: block !important;
+            box-shadow: 0 0 20px yellow;
+        }
+        .close-btn{
+            cursor: pointer;
+        }
+        .name{
+            margin-top: 0;
+        }
+    }
+}

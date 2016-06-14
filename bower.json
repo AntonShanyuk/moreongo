@@ -17,7 +17,8 @@
     "jquery": "^2.2.4",
     "angular-input-masks": "^2.3.0",
     "ng-focus-on": "^0.2.2",
-    "angular-resource": "^1.5.6"
+    "angular-resource": "^1.5.6",
+    "ng-debounce": "^0.1.7"
   },
   "resolutions": {
     "angular": "^1.5.6"

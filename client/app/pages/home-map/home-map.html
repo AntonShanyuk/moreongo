@@ -1,0 +1,22 @@
+<div class="home-map">
+    <div id="map_canvas">
+        <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom" options="vm.options" events="vm.map.events">
+            <div ui-view="map"></div>
+        </ui-gmap-google-map>
+    </div>
+
+    <div>
+        <div class="left-panel-xs visible-sm-block visible-xs-block" ng-class="{collapsed: vm.state.hidden}">
+            <div>
+                <div ui-view='scroll'></div>
+            </div>
+        </div>
+
+        <div class="left-panel visible-md-block visible-lg-block" ng-class="{collapsed: vm.state.hidden}">
+            <div>
+                <div ui-view='scroll'></div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -13,6 +13,12 @@ module.exports = function ($resource) {
             url: '/api/organization/:id',
             params: { id: '@_id' },
             method: 'PUT'
+        },
+        search: {
+            url: '/api/organizations/:lng/:lat',
+            params: { lat: '@lat', lng: '@lng' },
+            method: 'GET',
+            isArray: true
         }
     });
 }

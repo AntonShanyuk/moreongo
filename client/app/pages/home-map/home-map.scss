@@ -1,0 +1,51 @@
+.home-map{
+    #map_canvas {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        @media only screen and (min-width : 992px) {
+            top: 60px;
+        } 
+        @media only screen and (max-width : 992px) {
+            top: 50px;
+        } 
+    }
+
+    .panel{
+        &{
+            background: rgba(0,0,0, .5);
+            border: 1px solid rgba(0, 0, 0, .7);
+            padding: 25px;
+        }
+        
+        *{
+            color: white;
+        }
+        
+        .form-control, .transparent{
+            background: transparent !important;
+            border: 1px solid white;
+        }    
+
+        .control-group{
+            margin-bottom: 25px;
+        }    
+    }
+    
+    .left-panel-xs{
+        position: relative;
+        top: 50px;
+    }
+    
+    .left-panel{
+        position: relative;
+        left: 100px;
+        top: 110px;
+        float: left;
+        width: 500px;
+    }
+    
+    .left-panel-xs.collpsed, .left-panel.collapsed{
+        width: 80px;
+    }
+}

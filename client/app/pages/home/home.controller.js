@@ -1,45 +1,43 @@
 /** @ngInject */
-module.exports = function (mapService, stateService, currentSession, session, $state, $stateParams, $rootScope, $scope) {
+module.exports = function (mapService, currentSession, session, $state, $scope, $rootScope) {
     var vm = this;
-
-    vm.map = { center: { latitude: 50.4223541, longitude: 30.5211557 }, zoom: 14 };
-
-    vm.city = $stateParams.city;
-    vm.service = $stateParams.service;
     vm.isAuthenticated = currentSession.isAuthenticated;
     vm.organizationName = currentSession.organizationName;
 
-    vm.state = stateService.home;
-
     vm.options = { scrollwheel: false };
 
-    vm.changeCity = function(){
-        $scope.$emit('cityChanged', vm.city);
-        mapService.getPosition(vm.city).then(function(position){
-            var location = position.geometry.location;
-            vm.map.center = {
-                latitude: location.lat(),
-                longitude: location.lng()
-            }
-        });
+    vm.changeCity = function () {
+        $state.go('home.map.search', { city: vm.city });
     }
-    vm.changeCity();
 
-    vm.changeService = function(){
-        $scope.$emit('serviceChanged', vm.service);
+    vm.changeService = function () {
+        $state.go('home.map.search', { service: vm.service });
     }
-    vm.changeService();
+
+    $rootScope.$on('cityChanged', function (event, city, init) {
+        if (init) {
+            vm.city = city;
+        }
+    });
+
+    $rootScope.$on('serviceChanged', function (event, service, init) {
+        if (init) {
+            vm.service = service;
+        }
+    });
 
     vm.logout = function () {
         session.delete().$promise.then(function () {
-            $state.go('home.search', {}, { reload: 'home' });
+            $state.go('home.map.search', {}, { reload: 'home' });
         });
     }
 
-    $rootScope.$on('mapCenterSet', function(event, position){
-        vm.map.center = {
-            latitude: position.latitude,
-            longitude: position.longitude
-        };
-    });
+    vm.requestLocation = function () {
+        mapService.requestLocation().then(function (location) {
+            $scope.$emit('mapCenterSet', location);
+            return mapService.getAddress(location);
+        }).then(function (address) {
+            $scope.$emit('cityChanged', address.formatted_address);
+        });
+    }
 }

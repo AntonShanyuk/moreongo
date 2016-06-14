@@ -1,0 +1,3 @@
+<ui-gmap-marker ng-repeat="organization in vm.organizations" idKey='organization._id' coords='organization.location' click='vm.highlight(organization)'
+    options='{title: organization.name, opacity: (organization.highlight ? 1 : 0.6)}'>
+</ui-gmap-marker>

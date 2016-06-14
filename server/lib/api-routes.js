@@ -15,6 +15,13 @@ class ApiRoutes {
             this.organizationController.searchServices(req, res);
         });
 
+        expressApp.get('/api/defaults', (req, res) => {
+            res.send({
+                city: 'Київ',
+                location: { latitude: 50.4223541, longitude: 30.5211557 }
+            });
+        });
+
         expressApp.get('/api/session', (req, res) => {
             this.sessionController.get(req, res);
         });

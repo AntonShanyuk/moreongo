@@ -1,30 +1,23 @@
 var _ = require('lodash');
 
 /** @ngInject */
-module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateService, organization, $state, myOrganization, $stateParams, $rootScope) {
+module.exports = function (mapService, $scope, focus, organization, $state, myOrganization, $rootScope) {
     var vm = this;
 
     if (myOrganization) {
-        console.log(myOrganization);
         vm.edit = true;
         vm.address = myOrganization.address;
         vm.name = myOrganization.name;
         vm.services = myOrganization.services.concat([{ name: '', price: '' }]);
         setPosition();
-    } else {
-        if ($stateParams.city) {
-            vm.address = $stateParams.city;
-            setPosition();
-        } else {
-            mapService.requestLocation(initMapPosition);
-        }
-
+    } else { 
         vm.services = [{ name: '', price: 0 }];
     }
 
     $rootScope.$on('cityChanged', function (event, city) {
         if (!vm.edit) {
             vm.address = city;
+            setPosition();
         }
     });
 
@@ -64,7 +57,7 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
             }).$promise;
         }
         promise.then(function () {
-            $state.go('home.search', {}, { reload: 'home' });
+            $state.go('home.map.search', {}, { reload: 'home' });
         });
     }
 
@@ -81,10 +74,12 @@ module.exports = function (mapService, uiGmapGoogleMapApi, $scope, focus, stateS
     }
 
     function setPosition() {
-        mapService.getPosition(vm.address).then(function (position) {
-            var location = position.geometry.location;
+        mapService.getPosition(vm.address).then(function (location) {
             vm.location = [location.lng(), location.lat()];
-            $scope.$emit('registrationCircleSet', vm.location);
+            $scope.$emit('registrationCircleSet', {
+                latitude: location.lat(),
+                longitude: location.lng()
+            });
         });
     }
 

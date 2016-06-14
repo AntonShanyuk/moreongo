@@ -5,52 +5,25 @@
         .input-transparent{
             background: transparent;
             color: white;
-            @media only screen and (min-width : 992px) and (max-width: 1099px){
-                width: 250px;
+            @media only screen and (min-width : 992px) and (max-width: 1049px){
+                width: 190px;
             }
-            @media only screen and (min-width : 1100px)  and (max-width: 1299px) {
-                width: 300px;
+            @media only screen and (min-width : 1050px)  and (max-width: 1399px) {
+                width: 220px;
             }
-            @media only screen and (min-width : 1300px)   and (max-width: 1499px){
+            @media only screen and (min-width : 1450px)   and (max-width: 15499px){
                 width: 400px;
             } 
-            @media only screen and (min-width : 1500px){
+            @media only screen and (min-width : 1605px){
                 width: 500px;
             } 
         }
-    }
 
-    #map_canvas {
-        position: fixed;
-        width: 100%;
-        bottom: 0;
-        @media only screen and (min-width : 992px) {
-            top: 60px;
-        } 
-        @media only screen and (max-width : 992px) {
-            top: 50px;
-        } 
-    }
-
-    .panel{
-        &{
-            background: rgba(0,0,0, .5);
-            border: 1px solid rgba(0, 0, 0, .7);
-            padding: 25px;
-        }
-        
-        *{
+        .btn-transparent{
+            background: transparent;
             color: white;
-        }
-        
-        .form-control, .transparent{
-            background: transparent !important;
             border: 1px solid white;
-        }    
-
-        .control-group{
-            margin-bottom: 25px;
-        }    
+        }
     }
 
     .cursive {
@@ -71,22 +44,5 @@
         @media only screen and (max-width : 992px) {
             width: 100%;
         }    
-    }
-    
-    .left-panel-xs{
-        position: relative;
-        top: 50px;
-    }
-    
-    .left-panel{
-        position: relative;
-        left: 100px;
-        top: 110px;
-        float: left;
-        width: 500px;
-    }
-    
-    .left-panel-xs.collpsed, .left-panel.collapsed{
-        width: 80px;
     }
 }

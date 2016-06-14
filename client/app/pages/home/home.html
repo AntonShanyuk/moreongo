@@ -10,15 +10,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand cursive" href="/app/#/">Moreongo</a>
+                <a class="navbar-brand cursive" ui-sref="home.map.search" ui-sref-opts="{ inherit: false }">Moreongo</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left search-form" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control input-lg input-transparent" placeholder="Город" ng-model="vm.city" ng-model-options='{ debounce: 400 }'
-                            ng-change="vm.changeCity();">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-lg input-transparent" placeholder="Город" ng-model="vm.city" ng-model-options='{ debounce: 400 }'
+                                ng-change="vm.changeCity();">
+                            <span class="input-group-btn">
+                                <button class="btn btn-lg btn-transparent" type="button" ng-click="vm.requestLocation();"><span class="glyphicon glyphicon-screenshot"></span></button>
+                            </span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control input-lg input-transparent" placeholder="Услуга" ng-model="vm.service" ng-model-options='{ debounce: 400 }'
@@ -28,19 +33,19 @@
                 <div ng-if="!vm.isAuthenticated">
                     <form class="navbar-form navbar-right">
                         <div class="form-group">
-                            <a ui-sref="home.registerService" class="btn btn-lg btn-danger full-width-sm">Добавить мой сервис</a>
+                            <a ui-sref="home.map.registerService" class="btn btn-lg btn-danger full-width-sm">Добавить мой сервис</a>
                         </div>
                     </form>
                     <form class="navbar-form navbar-right">
                         <div class="form-group">
-                            <a ui-sref="home.login" class="btn btn-lg btn-default full-width-sm">Войти</a>
+                            <a ui-sref="home.map.login" class="btn btn-lg btn-default full-width-sm">Войти</a>
                         </div>
                     </form>
                 </div>
                 <div ng-if="vm.isAuthenticated && vm.organizationName">
                     <form class="navbar-form navbar-right">
                         <div class="form-group">
-                            <a ui-sref="home.myService" class="btn btn-lg btn-danger full-width-sm" ng-bind="vm.organizationName"></a>
+                            <a ui-sref="home.map.myService" class="btn btn-lg btn-danger full-width-sm" ng-bind="vm.organizationName"></a>
                         </div>
                     </form>
                     <form class="navbar-form navbar-right" ng-submit="vm.logout()">
@@ -55,25 +60,5 @@
         <!-- /.container-fluid -->
     </nav>
 
-
-    <div id="map_canvas">
-        <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom" options="vm.options">
-            <div ui-view="map"></div>
-        </ui-gmap-google-map>
-    </div>
-
-    <div>
-        <div class="left-panel-xs visible-sm-block visible-xs-block" ng-class="{collapsed: vm.state.hidden}">
-            <div>
-                <div ui-view='scroll'></div>
-            </div>
-        </div>
-
-        <div class="left-panel visible-md-block visible-lg-block" ng-class="{collapsed: vm.state.hidden}">
-            <div>
-                <div ui-view='scroll'></div>
-            </div>
-        </div>
-
-    </div>
+    <div ui-view></div>
 </div>
