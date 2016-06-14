@@ -66,7 +66,7 @@ module.exports = function (mapService, $scope, focus, organization, $state, myOr
             }).$promise;
         }
         promise.then(function () {
-            $state.go('home.map.search', {}, { reload: 'home' });
+            $state.go('home.map.search', {lng: vm.location[0], lat: vm.location[1], city: null }, { reload: 'home' });
         });
     }
 
