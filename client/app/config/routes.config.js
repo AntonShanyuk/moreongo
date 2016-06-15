@@ -137,16 +137,19 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
 
     /** @ngInject */
-    function resolveLocation($stateParams, mapService, defaultData) {
+    function resolveLocation($stateParams, mapService, defaultData, $window) {
         var zoom = Number($stateParams.zoom || 12);
+        var lastSearch = $window.localStorage.getItem("lastSearch");
         if ($stateParams.lat && $stateParams.lng) {
             return {
                 latitude: Number($stateParams.lat),
                 longitude: Number($stateParams.lng),
                 zoom: zoom
             }
-        } else if ($stateParams.city) {
-            return mapService.getPosition($stateParams.city).then(function (location) {
+        } else if ($stateParams.city || lastSearch) {
+            var city = $stateParams.city || lastSearch;
+            return mapService.getPosition(city).then(function (location) {
+                $window.localStorage.setItem('lastSearch', city);
                 return {
                     latitude: location.lat(),
                     longitude: location.lng(),

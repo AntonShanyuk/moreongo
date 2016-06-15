@@ -1,7 +1,7 @@
 'use strict';
 
 /** @ngInject */
-module.exports = function ($rootScope, $scope, $stateParams, location, debounce, $timeout, defaultData) {
+module.exports = function ($rootScope, $scope, $stateParams, location, debounce, $timeout) {
     var vm = this;
 
     vm.map = { center: location, zoom: location.zoom };
@@ -25,7 +25,7 @@ module.exports = function ($rootScope, $scope, $stateParams, location, debounce,
     });
 
     $timeout(function () {
-        $scope.$emit('cityChanged', $stateParams.city || defaultData.city, true);
+        $scope.$emit('cityChanged', location.city, true);
         $scope.$emit('serviceChanged', $stateParams.service, true);
     });
 }
