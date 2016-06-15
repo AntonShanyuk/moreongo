@@ -15,7 +15,7 @@ class SessionController {
                 body.organizationName = organization.name;
                 res.send(body);
             }).catch(err => {
-                res.status(500).end();
+                res.status(500).send(err);
             });
         }
     }

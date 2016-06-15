@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 var express = require('express');
 var session = require('express-session')
 var cookieParser = require('cookie-parser')
+var expressValidator = require('express-validator');
 var MongoStore = require('connect-mongo')(session);
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -26,8 +27,15 @@ class ExpressWrapper {
         app.get('/', (req, res) => {
             res.sendFile(path.join(__dirname, '../../client/landing/index.html'));
         });
-        
+
         app.use(bodyParser.json());
+        app.use(expressValidator({
+            customValidators: {
+                isArray: function (value) {
+                    return Array.isArray(value);
+                }
+            }
+        }));
         app.use(cookieParser());
         app.use(session({
             secret: this.config.sessionSecret,

@@ -10,6 +10,13 @@ class OrganizationController {
     }
 
     postOrganization(req, res) {
+        this._validateOrganization(req);
+        this._validateUser(req);
+
+        if (this._checkValidationErrors(req, res)) {
+            return;
+        }
+
         return this.userModel.registerAsync(new this.userModel({ email: req.body.email }), req.body.password).then(user => {
             var localAuth = Promise.promisify(passport.authenticate('local'));
             return localAuth(req, res).return(user);
@@ -27,15 +34,26 @@ class OrganizationController {
         }).then(doc => {
             res.send(doc);
         }).catch(err => {
-            res.status(500).end();
+            res.status(500).send(err);
         });
     }
 
     putOrganization(req, res) {
-        this.organizationModel.updateAsync({ _id: req.params.id, user: req.user.email }, req.body).then(organization => {
+        this._validateOrganization(req);
+
+        if (this._checkValidationErrors(req, res)) {
+            return;
+        }
+
+        this.organizationModel.updateAsync({ _id: req.params.id, user: req.user.email }, {
+            name: req.body.name,
+            services: req.body.services,
+            address: req.body.address,
+            location: req.body.location
+        }).then(organization => {
             res.send(organization);
         }).catch(err => {
-            res.status(500).end();
+            res.status(500).send(err);
         });
     }
 
@@ -43,7 +61,7 @@ class OrganizationController {
         this.organizationModel.findOneAsync({ user: req.user.email }).then(organization => {
             res.send(organization);
         }).catch(err => {
-            res.status(500).end();
+            res.status(500).send(err);
         });
     }
 
@@ -82,7 +100,7 @@ class OrganizationController {
         }).then(results => {
             res.send(results);
         }).catch(err => {
-            res.status(500).end();
+            res.status(500).send(err);
         });
     }
 
@@ -90,7 +108,7 @@ class OrganizationController {
         var query = {
             location: {
                 $near: [req.params.lng, req.params.lat],
-                $maxDistance: 0.3
+                $maxDistance: 0.3 // try 4/zoom
             }
         }
 
@@ -108,6 +126,27 @@ class OrganizationController {
         this.organizationModel.findAsync(query).then(results => {
             res.send(results);
         });
+    }
+
+    _validateOrganization(req) {
+        req.checkBody('name', 'Invalid name').notEmpty();
+        req.checkBody('address', 'Invalid address').notEmpty();
+        req.checkBody('location', 'Invalid location').notEmpty().isArray();
+        req.checkBody('location[0]', 'Invalid longitude').notEmpty().isFloat();
+        req.checkBody('location[1]', 'Invalid latitude').notEmpty().isFloat();
+    }
+
+    _validateUser(req) {
+        req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+        req.checkBody('password', 'Invalid password').notEmpty();
+    }
+
+    _checkValidationErrors(req, res) {
+        var errors = req.validationErrors();
+        if (errors) {
+            res.status(400).send(errors);
+            return true;
+        }
     }
 }
 
