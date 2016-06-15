@@ -111,10 +111,11 @@ class OrganizationController {
     }
 
     geoFind(req, res) {
+        var zoom = Number(req.query.zoom);
         var query = {
             location: {
                 $near: [req.params.lng, req.params.lat],
-                $maxDistance: 0.3 // try 4/zoom
+                $maxDistance: 6.28 / Math.pow(zoom, 1/2)
             }
         }
 

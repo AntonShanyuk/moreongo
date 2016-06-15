@@ -87,7 +87,8 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
                     return organization.search({
                         lat: location.latitude,
                         lng: location.longitude,
-                        service: $stateParams.service
+                        service: $stateParams.service,
+                        zoom: location.zoom
                     }).$promise;
                 }
             }
@@ -137,25 +138,28 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
 
     /** @ngInject */
     function resolveLocation($stateParams, mapService, defaultData) {
-        if ($stateParams.lat && $stateParams.lng && $stateParams.zoom) {
+        var zoom = Number($stateParams.zoom || 12);
+        if ($stateParams.lat && $stateParams.lng) {
             return {
                 latitude: Number($stateParams.lat),
                 longitude: Number($stateParams.lng),
-                zoom: Number($stateParams.zoom)
+                zoom: zoom
             }
         } else if ($stateParams.city) {
             return mapService.getPosition($stateParams.city).then(function (location) {
                 return {
                     latitude: location.lat(),
                     longitude: location.lng(),
-                    city: $stateParams.city
+                    city: $stateParams.city,
+                    zoom: zoom
                 };
             });
         } else {
             return {
                 latitude: defaultData.location.latitude,
                 longitude: defaultData.location.longitude,
-                city: defaultData.city
+                city: defaultData.city,
+                zoom: zoom
             };
         }
     }

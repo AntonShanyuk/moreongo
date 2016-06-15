@@ -4,7 +4,7 @@
 module.exports = function ($rootScope, $scope, $stateParams, location, debounce, $timeout, defaultData) {
     var vm = this;
 
-    vm.map = { center: location, zoom: location.zoom || 14 };
+    vm.map = { center: location, zoom: location.zoom };
     vm.options = { scrollwheel: false };
     vm.map.events = {
         center_changed: debounce(function (map) {
