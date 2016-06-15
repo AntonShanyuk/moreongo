@@ -17,7 +17,13 @@ class OrganizationController {
             return;
         }
 
-        return this.userModel.registerAsync(new this.userModel({ email: req.body.email }), req.body.password).then(user => {
+        return this.userModel.findOneAsync({ email: req.body.email }).then(user => {
+            if (user) {
+                return Promise.reject({ status: 409, message: 'User with specified email already exist' });
+            } else {
+                return this.userModel.registerAsync(new this.userModel({ email: req.body.email }), req.body.password);
+            }
+        }).then(user => {
             var localAuth = Promise.promisify(passport.authenticate('local'));
             return localAuth(req, res).return(user);
         }).then(user => {
@@ -34,7 +40,7 @@ class OrganizationController {
         }).then(doc => {
             res.send(doc);
         }).catch(err => {
-            res.status(500).send(err);
+            res.status(err.status || 500).send(err);
         });
     }
 

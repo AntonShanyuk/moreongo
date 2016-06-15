@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 /** @ngInject */
-module.exports = function (mapService, $scope, focus, organization, $state, location, myOrganization, $rootScope, $timeout) {
+module.exports = function (mapService, $scope, focus, organization, $state, location, myOrganization, $rootScope, $timeout, $q) {
     var vm = this;
 
     if (myOrganization) {
@@ -72,7 +72,13 @@ module.exports = function (mapService, $scope, focus, organization, $state, loca
                 services: notEmptyServices(),
                 email: vm.email,
                 password: vm.password
-            }).$promise;
+            }).$promise.catch(function(err){
+                if(err.status == 409){
+                    vm.emailRegistered = true;
+                }
+
+                return $q.reject(err);
+            });
         }
         promise.then(function () {
             $state.go('home.map.search', { lng: vm.location[0], lat: vm.location[1], city: null }, { reload: 'home' });

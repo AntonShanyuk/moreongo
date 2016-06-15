@@ -1,12 +1,15 @@
 /** @ngInject */
-module.exports = function (session, $state) {
+module.exports = function (session, $state, $q) {
     var vm = this;
 
     vm.login = function () {
         session.post({
             email: vm.email,
             password: vm.password
-        }).$promise.then(function () {
+        }).$promise.catch(function(err){
+            vm.loginFailed = true;
+            return $q.reject(err);
+        }).then(function () {
             $state.go('home.map.search', {}, { reload: 'home' });
         });
     }

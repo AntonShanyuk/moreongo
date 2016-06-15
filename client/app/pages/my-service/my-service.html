@@ -5,7 +5,7 @@
                 <label for="location">Введите Ваш адрес или перетащите точку на карте</label>
                 <div class="input-group">
                     <input type="text" class="form-control" id="location" placeholder="Введите Ваш адрес" ng-model="vm.address" ng-change="vm.addressChanged()"
-                        ng-model-options='{ debounce: 400 }'>
+                        ng-model-options='{ debounce: 400 }' required>
                     <span class="input-group-btn">
                         <button class="btn btn-lg transparent" type="button" ng-click="vm.requestLocation();"><span class="glyphicon glyphicon-screenshot"></span></button>
                     </span>
@@ -15,7 +15,7 @@
             <div panel-collapse>
                 <div class="form-group-lg control-group">
                     <label for="name">Укажите наименование Вашего сервиса</label>
-                    <input type="text" class="form-control" id="name" placeholder="Например, Салон красоты 'Афродита'" focus-on="name" ng-model="vm.name">
+                    <input type="text" class="form-control" id="name" placeholder="Например, Салон красоты 'Афродита'" focus-on="name" ng-model="vm.name" required>
                 </div>
 
                 <hr>
@@ -42,12 +42,13 @@
 
                 <div ng-if="!vm.edit">
                     <div class="form-group-lg control-group">
-                        <label for="email">Чтобы получать уведомления о записях, оставьте контактный email (опционально)</label>
-                        <input type="email" class="form-control" id="email" ng-model="vm.email">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" ng-model="vm.email" required>
+                        <small class="validation-error" ng-if="vm.emailRegistered">Такой email уже зарегистрирован в системе</small>
                     </div>
                     <div class="form-group-lg control-group">
-                        <label for="password">Чтобы иметь возможность зайти с другого компьютера или телефона, введите пароль для учетной записи (опционально)</label>
-                        <input type="password" class="form-control" id="password" ng-model="vm.password">
+                        <label for="password">Пароль для учетной записи</label>
+                        <input type="password" class="form-control" id="password" ng-model="vm.password" required>
                     </div>
 
                     <hr>

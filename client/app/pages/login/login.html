@@ -8,7 +8,7 @@
             <label for="password">Пароль</label>
             <input type="password" class="form-control" id="password" ng-model="vm.password">
         </div>
-
+        <small ng-if="vm.loginFailed" class="validation-error">Неверное имя пользователя или пароль</small>
         <hr>
 
         <div class="form-group-lg">
