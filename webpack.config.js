@@ -23,7 +23,7 @@ module.exports = {
     },
     entry: {
         'vendor-bundle': ['jquery', 'lodash', 'angular', 'angular-simple-logger', 'angular-google-maps', 'angular-ui-router', 'bootstrap-loader',
-            'angular-input-masks', 'ng-focus-on', 'angular-resource', 'ng-debounce'],
+            'angular-input-masks', 'ng-focus-on', 'angular-resource', 'ng-debounce', 'angular-scroll'],
         'app-bundle': './client/app/client-app.js'
     },
     output: {

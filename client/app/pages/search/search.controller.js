@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 /** @ngInject */
-module.exports = function (organizations, $rootScope, $scope, $state, location) {
+module.exports = function (organizations, $rootScope, $scope, $state, location, $document) {
     var vm = this;
 
     vm.organizations = organizations;
@@ -15,12 +15,16 @@ module.exports = function (organizations, $rootScope, $scope, $state, location) 
         organization.highlight = false;
     }
 
+    vm.navigate = function(organization){
+        resetHighlight();
+        organization.highlight = true;
+    }
+
     var highlightEventDestructor = $rootScope.$on('organization.highlight', function (event, id) {
-        var highlighted = _.find(vm.organizations, { highlight: true });
-        if (highlighted) {
-            highlighted.highlight = false;
-        }
-        _.find(vm.organizations, { _id: id }).highlight = true;
+        var current = highlight(id);
+        
+        var container = angular.element($document[0].querySelector('.left-panel'));
+        $document.scrollToElementAnimated(angular.element(container[0].querySelector('.o' + current._id)), 70);
         $scope.$apply();
     });
 
@@ -44,4 +48,19 @@ module.exports = function (organizations, $rootScope, $scope, $state, location) 
         zoomChangedEventDestructor();
         cityChangedEventDestructor();
     });
+
+    function highlight(id) {
+        resetHighlight();
+        var current = _.find(vm.organizations, { _id: id });
+        current.highlight = true;
+
+        return current;
+    }
+
+    function resetHighlight(){
+        var highlighted = _.find(vm.organizations, { highlight: true });
+        if (highlighted) {
+            highlighted.highlight = false;
+        }
+    }
 }

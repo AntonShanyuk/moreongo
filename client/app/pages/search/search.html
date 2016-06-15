@@ -1,9 +1,9 @@
 <div class="search-page">
-    <div class="panel org-panel hidden-xs hidden-sm" ng-repeat="organization in vm.organizations" ng-class="{'highlight': organization.highlight}">
+    <div class="panel org-panel hidden-xs hidden-sm o{{organization._id}}" ng-repeat="organization in vm.organizations" ng-class="{'highlight': organization.highlight}">
         <span class="glyphicon glyphicon-remove hidden-md hidden-lg pull-right close-btn" ng-click="vm.hide(organization);"></span>
         <div class="row">
             <div class="col-xs-12">
-                <h3 ng-bind="organization.name" class="name"></h3>
+                <h3 ng-bind="organization.name" class="name" ng-click="vm.navigate(organization);"></h3>
             </div>
             <div class="col-xs-12">
                 <h4 ng-bind="organization.address"></h4>

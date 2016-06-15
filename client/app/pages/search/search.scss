@@ -11,12 +11,14 @@
         &.highlight{
             display: block !important;
             box-shadow: 0 0 20px black;
+            background: black;
         }
         .close-btn{
             cursor: pointer;
         }
         .name{
             margin-top: 0;
+            cursor: pointer;
         }
     }
 }

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/AntonShanyuk/moreongo#readme",
   "dependencies": {
+    "angular-scroll": "^1.0.0",
     "bluebird": "^3.4.0",
     "body-parser": "^1.15.1",
     "bootstrap-loader": "^1.0.10",
