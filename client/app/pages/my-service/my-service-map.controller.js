@@ -23,11 +23,15 @@ module.exports = function ($scope, $rootScope) {
         }
     };
 
-    $rootScope.$on('registrationCircleSet', function (event, position) {
+    var circleSetDestructor = $rootScope.$on('registrationCircleSet', function (event, position) {
         vm.circleCenter = {
             latitude: position.latitude,
             longitude: position.longitude
         };
         $scope.$emit('mapCenterSet', position);
+    });
+
+    $scope.$on('$destroy', function(){
+        circleSetDestructor();
     });
 }

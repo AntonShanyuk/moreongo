@@ -147,11 +147,16 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
             return mapService.getPosition($stateParams.city).then(function (location) {
                 return {
                     latitude: location.lat(),
-                    longitude: location.lng()
+                    longitude: location.lng(),
+                    city: $stateParams.city
                 };
             });
         } else {
-            return defaultData.location;
+            return {
+                latitude: defaultData.location.latitude,
+                longitude: defaultData.location.longitude,
+                city: defaultData.city
+            };
         }
     }
     $urlRouterProvider.otherwise('/');

@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 /** @ngInject */
-module.exports = function (mapService, $scope, focus, organization, $state, myOrganization, $rootScope) {
+module.exports = function (mapService, $scope, focus, organization, $state, location, myOrganization, $rootScope, $timeout) {
     var vm = this;
 
     if (myOrganization) {
@@ -9,9 +9,17 @@ module.exports = function (mapService, $scope, focus, organization, $state, myOr
         vm.address = myOrganization.address;
         vm.name = myOrganization.name;
         vm.services = myOrganization.services.concat([{ name: '', price: '' }]);
-        setPosition();
-    } else { 
+        vm.location = myOrganization.location;
+        $timeout(function () {
+            $scope.$emit('registrationCircleSet', {
+                latitude: myOrganization.location[1],
+                longitude: myOrganization.location[0]
+            });
+        });
+    } else {
         vm.services = [{ name: '', price: 0 }];
+        vm.address = location.city;
+        setPosition();
     }
 
     $rootScope.$on('cityChanged', function (event, city) {
@@ -39,9 +47,10 @@ module.exports = function (mapService, $scope, focus, organization, $state, myOr
     vm.requestLocation = function () {
         mapService.requestLocation().then(function (location) {
             $scope.$emit('mapCenterSet', location);
+            $scope.$emit('registrationCircleSet', location);
             return mapService.getAddress(location);
         }).then(function (address) {
-            $scope.$emit('cityChanged', address.formatted_address);
+            vm.address = address.formatted_address;
         });
     }
 
@@ -66,7 +75,7 @@ module.exports = function (mapService, $scope, focus, organization, $state, myOr
             }).$promise;
         }
         promise.then(function () {
-            $state.go('home.map.search', {lng: vm.location[0], lat: vm.location[1], city: null }, { reload: 'home' });
+            $state.go('home.map.search', { lng: vm.location[0], lat: vm.location[1], city: null }, { reload: 'home' });
         });
     }
 
@@ -96,10 +105,5 @@ module.exports = function (mapService, $scope, focus, organization, $state, myOr
         return _.filter(vm.services, function (service) {
             return !!service.name;
         });
-    }
-
-    function initMapPosition(position) {
-        $scope.$emit('registrationCircleSet', position);
-        setAddress(position);
     }
 }
