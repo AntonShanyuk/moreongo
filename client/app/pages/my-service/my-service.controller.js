@@ -18,8 +18,10 @@ module.exports = function (mapService, $scope, focus, organization, $state, loca
         });
     } else {
         vm.services = [{ name: '', price: 0 }];
-        vm.address = location.city;
-        setPosition();
+        setAddress(location);
+        $timeout(function () {
+            $scope.$emit('registrationCircleSet', location);
+        });
     }
 
     $rootScope.$on('cityChanged', function (event, city) {
@@ -72,8 +74,8 @@ module.exports = function (mapService, $scope, focus, organization, $state, loca
                 services: notEmptyServices(),
                 email: vm.email,
                 password: vm.password
-            }).$promise.catch(function(err){
-                if(err.status == 409){
+            }).$promise.catch(function (err) {
+                if (err.status == 409) {
                     vm.emailRegistered = true;
                 }
 

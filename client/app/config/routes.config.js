@@ -110,7 +110,9 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
             resolve: {
                 myOrganization: function () {
                     return null;
-                }
+                },
+                /** @ngInject */
+                location: resolveLocation
             }
         })
         .state('home.map.myService', {
@@ -141,23 +143,30 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
         var zoom = Number($stateParams.zoom || 12);
         var lastSearch = $window.localStorage.getItem("lastSearch");
         if ($stateParams.lat && $stateParams.lng) {
-            return {
+            var result = {
                 latitude: Number($stateParams.lat),
                 longitude: Number($stateParams.lng),
                 zoom: zoom
-            }
-        } else if ($stateParams.city || lastSearch) {
+            };
+
+            $window.localStorage.setItem('lastSearch', JSON.stringify(result));
+            return result;
+        } else if ($stateParams.city) {
             var city = $stateParams.city || lastSearch;
             return mapService.getPosition(city).then(function (location) {
-                $window.localStorage.setItem('lastSearch', city);
-                return {
+                var result = {
                     latitude: location.lat(),
                     longitude: location.lng(),
                     city: $stateParams.city,
                     zoom: zoom
                 };
+
+                $window.localStorage.setItem('lastSearch', JSON.stringify(result));
+                return result;
             });
-        } else {
+        } else if(lastSearch){
+            return JSON.parse(lastSearch);
+        }else {
             return {
                 latitude: defaultData.location.latitude,
                 longitude: defaultData.location.longitude,
