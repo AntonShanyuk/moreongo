@@ -35,6 +35,7 @@ module.exports = function (mapService, currentSession, session, $state, $scope, 
             $scope.$emit('mapCenterSet', location);
             return mapService.getAddress(location);
         }).then(function (address) {
+            vm.city = address.formatted_address;
             $scope.$emit('cityChanged', address.formatted_address);
         });
     }

@@ -22,7 +22,8 @@ module.exports = {
                 var now = moment().add({ hours: 1 }).startOf('hour');
                 var isInPast = moment(args.date).diff(now, 'days') < 0;
                 return isInPast;
-            }
+            },
+            showWeeks: false
         }
 
         vm.changeSelectedDateTime = function () {
