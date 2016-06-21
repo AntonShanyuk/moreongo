@@ -1,13 +1,14 @@
 require('./index.scss');
 
 var mapService = require('./services/map.service');
+var moment = require('moment');
 
 var organization = require('./api/organization.resource.js');
 var session = require('./api/session.resource.js');
 var defaults = require('./api/defaults.resource.js');
 
-var collapsePanelDirective = require('./components/collapse-panel/collapse-panel.directive');
-var collapseOnClickDirective = require('./components/nav-collapse-on-click/nav-collapse-on-click.directive');
+var collapsePanelDirective = require('./directives/collapse-panel/collapse-panel.directive');
+var collapseOnClickDirective = require('./directives/nav-collapse-on-click/nav-collapse-on-click.directive');
 
 var routesConfig = require('./config/routes.config');
 var httpConfig = require('./config/http.config');
@@ -19,6 +20,10 @@ app
     .config(routesConfig)
     .config(mapsConfig)
     .config(httpConfig)
+
+    .run(function(){
+        moment.locale('ru');
+    })
 
     .service('mapService', mapService)
 
