@@ -1,11 +1,12 @@
 <div class="date-time-picker">
-    <input type="text" class="form-control" ng-value="vm.date | amDateFormat: 'lll'" readonly uib-popover-template="'datePopup.html'" popover-placement="bottom-left"
-        popover-trigger="outsideClick">
+    <input type="text" class="form-control" ng-value="vm.date | amDateFormat: 'lll'" readonly uib-popover-template="'datePopup.html'"
+        popover-placement="bottom-left" popover-trigger="click" popover-is-open="vm.popoverOpen">
 </div>
 
 
 <script type="text/ng-template" id="datePopup.html">
-    <div class="row">
+    <div click-outside="vm.popoverOpen = false;" outside-if-not="uib-title, uib-time, uib-right, uib-left, uib-day, uib-month, uib-year, date-time-picker">
+        <div class="row">
             <div class="col-xs-6">
                 <div ng-bind="vm.date | amDateFormat: 'lll'" class="selected-date-time"></div>
             </div>
@@ -15,10 +16,11 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <uib-datepicker ng-model="vm.selectedDate" ng-change="vm.changeSelectedDateTime()" class="well well-sm"></uib-datepicker>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <uib-datepicker datepicker-options="vm.dateOptions" ng-model="vm.selectedDate" ng-change="vm.changeSelectedDateTime()" class="well well-sm"></uib-datepicker>
+            </div>
         </div>
     </div>
 </script>

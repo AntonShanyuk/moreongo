@@ -17,6 +17,14 @@ module.exports = {
 
         setDate();
 
+        vm.dateOptions = {
+            dateDisabled: function (args) {
+                var now = moment().add({ hours: 1 }).startOf('hour');
+                var isInPast = moment(args.date).diff(now, 'days') < 0;
+                return isInPast;
+            }
+        }
+
         vm.changeSelectedDateTime = function () {
             var momentTime = moment(vm.selectedTime);
             if (!momentTime.isValid()) {
