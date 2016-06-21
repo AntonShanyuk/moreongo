@@ -7,8 +7,10 @@ var moment = require('moment');
 module.exports = function (organizations, $rootScope, $scope, $state, location, $document) {
     var vm = this;
 
-    vm.selectedDate = new Date();
-    vm.selectedTime = moment().add({ hours: 1 }).startOf('hour');
+    vm.requestTime = moment().add({ hours: 1 }).startOf('hour').toDate();
+    vm.requestDateChanged = function(date){
+        console.log(date);
+    }
 
     vm.organizations = organizations;
 
@@ -21,22 +23,9 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
         organization.highlight = true;
     }
 
-    vm.changeSelectedDateTime = function () {
-        var momentTime = moment(vm.selectedTime);
-        if (!momentTime.isValid()) {
-            return;
-        }
-        vm.selectedDateTime = moment(moment(vm.selectedDate))
-            .hour(momentTime.hour())
-            .minute(momentTime.minute())
-            .format('lll');
-    }
-
     vm.sendRequest = function () {
         console.log(1);
     }
-
-    init();
 
     var highlightEventDestructor = $rootScope.$on('organization.highlight', function (event, id) {
         var current = highlight(id);
@@ -80,9 +69,5 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
         if (highlighted) {
             highlighted.highlight = false;
         }
-    }
-
-    function init() {
-        vm.changeSelectedDateTime();
     }
 }

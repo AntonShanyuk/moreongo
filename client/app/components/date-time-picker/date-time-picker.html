@@ -1,0 +1,24 @@
+<div class="date-time-picker">
+    <input type="text" class="form-control" ng-value="vm.date | amDateFormat: 'lll'" readonly uib-popover-template="'datePopup.html'" popover-placement="bottom-left"
+        popover-trigger="outsideClick">
+</div>
+
+
+<script type="text/ng-template" id="datePopup.html">
+    <div class="row">
+            <div class="col-xs-6">
+                <div ng-bind="vm.date | amDateFormat: 'lll'" class="selected-date-time"></div>
+            </div>
+            <div class="col-xs-6">
+                <div class="pull-right time-picker">
+                    <uib-timepicker ng-model="vm.selectedTime" ng-change="vm.changeSelectedDateTime()" show-meridian="false"></uib-timepicker>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <uib-datepicker ng-model="vm.selectedDate" ng-change="vm.changeSelectedDateTime()" class="well well-sm"></uib-datepicker>
+        </div>
+    </div>
+</script>

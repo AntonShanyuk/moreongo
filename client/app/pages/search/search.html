@@ -24,8 +24,7 @@
                     <form ng-submit="vm.sendRequest();" class="form-horizontal">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input type="text" class="form-control" ng-value="vm.selectedDateTime" readonly uib-popover-template="'datePopup.html'" popover-placement="bottom-left"
-                                    popover-trigger="outsideClick">
+                                <date-time-picker date="vm.requestTime" date-changed="vm.requestDateChanged(date);"></date-time-picker>
                             </div>
                         </div>
                         <div class="form-group">
@@ -36,7 +35,6 @@
                                 <button class="btn btn-default transparent pull-right" type="submit">Отправить запрос</button>
                                 <div class="clearfix"></div>
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -44,22 +42,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/ng-template" id="datePopup.html">
-    <div class="row">
-            <div class="col-xs-6">
-                <div ng-bind="vm.selectedDateTime" class="selected-date-time"></div>
-            </div>
-            <div class="col-xs-6">
-                <div class="pull-right time-picker">
-                    <uib-timepicker ng-model="vm.selectedTime" ng-change="vm.changeSelectedDateTime()"></uib-timepicker>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <uib-datepicker ng-model="vm.selectedDate" ng-change="vm.changeSelectedDateTime()" class="well well-sm"></uib-datepicker>
-        </div>
-    </div>
-</script>
