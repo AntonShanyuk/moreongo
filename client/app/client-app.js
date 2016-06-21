@@ -13,7 +13,7 @@ var routesConfig = require('./config/routes.config');
 var httpConfig = require('./config/http.config');
 var mapsConfig = require('./config/maps.config');
 
-var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'ui.utils.masks', 'focusOn', 'ngResource', 'debounce', 'duScroll']);
+var app = angular.module('moreongo', ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'ui.utils.masks', 'focusOn', 'ngResource', 'debounce', 'duScroll', 'ui.bootstrap']);
 
 app
     .config(routesConfig)

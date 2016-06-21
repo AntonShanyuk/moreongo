@@ -1,28 +1,46 @@
 'use strict';
 
 var _ = require('lodash');
+var moment = require('moment');
 
 /** @ngInject */
 module.exports = function (organizations, $rootScope, $scope, $state, location, $document) {
     var vm = this;
 
+    vm.selectedDate = new Date();
+    vm.selectedTime = moment().add({ hours: 1 }).startOf('hour');
+
     vm.organizations = organizations;
-    vm.book = function (service) {
-        console.log(service);
-    }
 
     vm.hide = function (organization) {
         organization.highlight = false;
     }
 
-    vm.navigate = function(organization){
+    vm.navigate = function (organization) {
         resetHighlight();
         organization.highlight = true;
     }
 
+    vm.changeSelectedDateTime = function () {
+        var momentTime = moment(vm.selectedTime);
+        if (!momentTime.isValid()) {
+            return;
+        }
+        vm.selectedDateTime = moment(moment(vm.selectedDate))
+            .hour(momentTime.hour())
+            .minute(momentTime.minute())
+            .format('lll');
+    }
+
+    vm.sendRequest = function () {
+        console.log(1);
+    }
+
+    init();
+
     var highlightEventDestructor = $rootScope.$on('organization.highlight', function (event, id) {
         var current = highlight(id);
-        
+
         var container = angular.element($document[0].querySelector('.left-panel'));
         $document.scrollToElementAnimated(angular.element(container[0].querySelector('.o' + current._id)), 70);
         $scope.$apply();
@@ -37,7 +55,7 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
     });
 
     var cityChangedEventDestructor = $rootScope.$on('cityChanged', function (event, city, init) {
-        if(!init){
+        if (!init) {
             $state.go('home.map.search', { city: city, lat: null, lng: null }, { reload: 'home.map.search' });
         }
     });
@@ -57,10 +75,14 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
         return current;
     }
 
-    function resetHighlight(){
+    function resetHighlight() {
         var highlighted = _.find(vm.organizations, { highlight: true });
         if (highlighted) {
             highlighted.highlight = false;
         }
+    }
+
+    function init() {
+        vm.changeSelectedDateTime();
     }
 }

@@ -6,7 +6,10 @@
             margin-top: 0;
         }
         .service{
-            margin-bottom: 10px; 
+            margin-bottom: 10px;
+            &.well{
+                background: transparent;
+            } 
         }
         &.highlight{
             display: block !important;
@@ -19,6 +22,47 @@
         .name{
             margin-top: 0;
             cursor: pointer;
+        }
+    }
+
+    .booking-form{
+        margin-top: 10px;
+    }
+    
+    .popover{
+        background: transparent;
+        .popover-inner{
+            background-color: black;
+            width: 400px;
+            border: 1px solid white;
+        }
+    }
+
+    .selected-date-time{
+        margin-top: 41px;
+    }
+
+    .time-picker{
+        padding-right: 9px;
+    }
+
+    .uib-timepicker{
+        .am-pm button{
+            background: transparent;
+        }
+    }
+
+    .uib-datepicker{
+        border: none;
+        .uib-daypicker, .uib-monthpicker, .uib-yearpicker{
+            outline: none !important;
+            width: 100%;
+            td button.active{
+                background-color: rgba(255, 255, 255, .3);
+            }
+        }
+        &, button{
+            background: transparent;
         }
     }
 }

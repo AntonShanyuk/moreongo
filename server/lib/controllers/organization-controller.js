@@ -2,6 +2,7 @@
 
 var Promise = require('bluebird');
 var passport = require('passport');
+var _ = require('lodash');
 
 class OrganizationController {
     constructor(organizationModel, userModel) {
@@ -128,7 +129,11 @@ class OrganizationController {
         }
 
         this.organizationModel.findAsync(query).then(results => {
-            res.send(results);
+            res.send(_.map(results, result => {
+                return this._organizationSearchModel(result);
+            }));
+        }).catch(err => {
+            res.status(500).send(err);
         });
     }
 
@@ -151,6 +156,10 @@ class OrganizationController {
             res.status(400).send(errors);
             return true;
         }
+    }
+
+    _organizationSearchModel(organization){
+        return _.omit(organization.toJSON(), ['user', '__v']);
     }
 }
 
