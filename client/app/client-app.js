@@ -17,7 +17,8 @@ var httpConfig = require('./config/http.config');
 var mapsConfig = require('./config/maps.config');
 
 var app = angular.module('moreongo',
-    ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'ui.utils.masks', 'focusOn', 'ngResource', 'debounce', 'duScroll', 'ui.bootstrap', 'angularMoment', 'angular-click-outside']);
+    ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'ui.utils.masks', 'focusOn', 'ngResource', 'debounce', 'duScroll', 'ui.bootstrap', 'angularMoment', 'angular-click-outside',
+        'ui.mask']);
 
 app
     .config(routesConfig)
@@ -38,5 +39,5 @@ app
 
     .directive('collapsePanel', collapsePanelDirective)
     .directive('navCollapseOnClick', collapseOnClickDirective)
-    
+
     .component('dateTimePicker', dateTimePickerComponent);

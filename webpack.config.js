@@ -25,7 +25,7 @@ module.exports = {
     entry: {
         'vendor-bundle': ['jquery', 'lodash', 'angular', 'moment', 'angular-moment', 'angular-simple-logger', 'angular-bootstrap', 'angular-google-maps', 'angular-ui-router',
             'bootstrap-loader', 'angular-input-masks', 'ng-focus-on', 'angular-resource', 'ng-debounce', 'angular-scroll', 'angular-i18n/angular-locale_ru-ru.js', 
-            'angular-click-outside'],
+            'angular-click-outside', 'angular-ui-mask'],
         'app-bundle': './client/app/client-app.js'
     },
     output: {
