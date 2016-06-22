@@ -4,12 +4,12 @@ var _ = require('lodash');
 var moment = require('moment');
 
 /** @ngInject */
-module.exports = function (organizations, $rootScope, $scope, $state, location, $document) {
+module.exports = function (organizations, $rootScope, $scope, $state, location, $document, meeting, toastr) {
     var vm = this;
 
     vm.requestTime = moment().add({ hours: 1 }).startOf('hour').toDate();
-    vm.requestDateChanged = function(date){
-        console.log(date);
+    vm.requestDateChanged = function(service, date){
+        service.requestDate = date;
     }
 
     vm.organizations = organizations;
@@ -23,8 +23,16 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
         organization.highlight = true;
     }
 
-    vm.sendRequest = function () {
-        console.log(1);
+    vm.sendRequest = function (organization, service) {
+        meeting.post({
+            organization: organization._id,
+            service: service.name,
+            phone: service.requestPhone,
+            email: service.requestEmail,
+            date: service.requestDate || vm.requestTime
+        }).$promise.then(function(){
+            toastr.success('Ожидайте подтверждение запроса по email либо по телефону', 'Запрос отправлен');
+        });
     }
 
     var highlightEventDestructor = $rootScope.$on('organization.highlight', function (event, id) {

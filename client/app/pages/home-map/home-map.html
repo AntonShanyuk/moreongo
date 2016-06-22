@@ -6,17 +6,19 @@
     </div>
 
     <div>
-        <div class="left-panel-xs visible-sm-block visible-xs-block" ng-class="{collapsed: vm.state.hidden}">
+        <div class="left-panel-xs visible-sm-block visible-xs-block">
             <div>
                 <div ui-view='scroll'></div>
             </div>
         </div>
 
-        <div class="left-panel visible-md-block visible-lg-block" ng-class="{collapsed: vm.state.hidden}">
+        <div class="left-panel visible-md-block visible-lg-block">
             <div>
                 <div ui-view='scroll'></div>
             </div>
         </div>
+
+        <div class="toastr-panel"></div>
 
     </div>
 </div>

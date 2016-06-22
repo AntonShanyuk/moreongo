@@ -12,6 +12,7 @@ var mongoose = require('mongoose');
 var onFinished = require('on-finished');
 var passport = require('passport');
 var User = require('./models/user.model');
+var _ = require('lodash');
 
 class ExpressWrapper {
     constructor(config, apiRoutes) {
@@ -32,7 +33,10 @@ class ExpressWrapper {
         app.use(expressValidator({
             customValidators: {
                 isArray: function (value) {
-                    return Array.isArray(value);
+                    return _.isArray(value);
+                },
+                isString: function(value){
+                    return _.isString(value);
                 }
             }
         }));

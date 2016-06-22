@@ -1,5 +1,7 @@
 'use strict';
 
+var moment = require('moment');
+
 require('../pages/home-navbar/home-navbar.scss');
 var homeNavbarTemplate = require('../pages/home-navbar/home-navbar.html');
 var homeNavbarController = require('../pages/home-navbar/home-navbar.controller');
@@ -24,6 +26,9 @@ var searchController = require('../pages/search/search.controller');
 
 var searchMapTemplate = require('../pages/search/search-map.html');
 var searchMapController = require('../pages/search/search-map.controller');
+
+var myMeetingsTemplate = require('../pages/my-meetings/my-meetings.html');
+var myMeetingsController = require('../pages/my-meetings/my-meetings.controller');
 
 /** @ngInject */
 module.exports = function ($stateProvider, $urlRouterProvider) {
@@ -135,6 +140,20 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
                     return organization.my().$promise;
                 }
             }
+        })
+        .state('home.map.myService.meetings', {
+            url: 'meetings/?date',
+            template: myMeetingsTemplate,
+            controller: myMeetingsController,
+            controllerAs: 'vm',
+            resolve: {
+                /** @ngInject */
+                meetings: function ($stateParams, meeting, dateUrlFormat) {
+                    var momentDate = moment($stateParams.date, dateUrlFormat);
+                    var date = momentDate.isValid() ? momentDate.toDate() : null;
+                    return meeting.getMy({ date: date }).$promise;
+                }
+            }
         });
 
 
@@ -164,9 +183,9 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
                 $window.localStorage.setItem('lastSearch', JSON.stringify(result));
                 return result;
             });
-        } else if(lastSearch){
+        } else if (lastSearch) {
             return JSON.parse(lastSearch);
-        }else {
+        } else {
             return {
                 latitude: defaultData.location.latitude,
                 longitude: defaultData.location.longitude,

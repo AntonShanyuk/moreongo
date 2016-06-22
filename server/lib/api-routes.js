@@ -4,9 +4,10 @@ var passport = require('passport');
 var Promise = require('bluebird');
 
 class ApiRoutes {
-    constructor(organizationController, sessionController) {
+    constructor(organizationController, sessionController, meetingController) {
         this.organizationController = organizationController;
         this.sessionController = sessionController;
+        this.meetingController = meetingController;
     }
 
     init(expressApp) {
@@ -49,6 +50,14 @@ class ApiRoutes {
 
         expressApp.get('/api/organizations/:lng/:lat', (req, res) => {
             this.organizationController.geoFind(req, res);
+        });
+
+        expressApp.post('/api/meetings', (req, res) => {
+            this.meetingController.postMeeting(req, res);
+        });
+
+        expressApp.get('/api/meetings/my', ensureAuthenticated, (req, res) => {
+            this.meetingController.getMyMeetings(req, res);
         });
 
         function ensureAuthenticated(req, res, next) {

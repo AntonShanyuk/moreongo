@@ -45,7 +45,7 @@
                 <div ng-if="vm.isAuthenticated && vm.organizationName">
                     <form class="navbar-form navbar-right">
                         <div class="form-group">
-                            <a ui-sref="home.map.myService" class="btn btn-lg btn-danger full-width-sm" ng-bind="vm.organizationName"></a>
+                            <a ui-sref="home.map.myService.meetings" class="btn btn-lg btn-danger full-width-sm" ng-bind="vm.organizationName"></a>
                         </div>
                     </form>
                     <form class="navbar-form navbar-right" ng-submit="vm.logout()">

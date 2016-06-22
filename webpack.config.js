@@ -13,6 +13,7 @@ module.exports = {
         loaders: [
             { test: /\.html$/, loader: "html" },
             { test: /\.scss$/, loaders: ["style", "css", "sass"] },
+            { test: /\.css$/, loaders: ["style", "css"] },
             { test: /\.(woff2?|svg)$/, loader: 'url?limit=10000' },
             { test: /\.(ttf|eot)$/, loader: 'file' },
             { test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery' },
@@ -25,7 +26,7 @@ module.exports = {
     entry: {
         'vendor-bundle': ['jquery', 'lodash', 'angular', 'moment', 'angular-moment', 'angular-simple-logger', 'angular-bootstrap', 'angular-google-maps', 'angular-ui-router',
             'bootstrap-loader', 'angular-input-masks', 'ng-focus-on', 'angular-resource', 'ng-debounce', 'angular-scroll', 'angular-i18n/angular-locale_ru-ru.js', 
-            'angular-click-outside', 'angular-ui-mask'],
+            'angular-click-outside', 'angular-ui-mask', 'angular-toastr'],
         'app-bundle': './client/app/client-app.js'
     },
     output: {

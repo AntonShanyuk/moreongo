@@ -44,8 +44,14 @@
         float: left;
         width: 500px;
     }
-    
-    .left-panel-xs.collpsed, .left-panel.collapsed{
-        width: 80px;
+
+    #toast-container{
+        @media only screen and (min-width : 992px) {
+            top: 100px;
+        } 
+        @media only screen and (max-width : 992px) {
+            top: 50px;
+        } 
+        
     }
 }

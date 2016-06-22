@@ -5,16 +5,17 @@ var passport = require('passport');
 var _ = require('lodash');
 
 class OrganizationController {
-    constructor(organizationModel, userModel) {
+    constructor(organizationModel, userModel, validationChecker) {
         this.organizationModel = organizationModel;
         this.userModel = userModel;
+        this.validationChecker = validationChecker;
     }
 
     postOrganization(req, res) {
         this._validateOrganization(req);
         this._validateUser(req);
 
-        if (this._checkValidationErrors(req, res)) {
+        if (this.validationChecker.checkValidationErrors(req, res)) {
             return;
         }
 
@@ -148,14 +149,6 @@ class OrganizationController {
     _validateUser(req) {
         req.checkBody('email', 'Invalid email').notEmpty().isEmail();
         req.checkBody('password', 'Invalid password').notEmpty();
-    }
-
-    _checkValidationErrors(req, res) {
-        var errors = req.validationErrors();
-        if (errors) {
-            res.status(400).send(errors);
-            return true;
-        }
     }
 
     _organizationSearchModel(organization){
