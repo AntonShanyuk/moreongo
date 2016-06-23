@@ -4,8 +4,8 @@
             <div class="form-group">
                 <label for="date" class="col-sm-4 control-label">Записи на дату:</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="date" ng-model="vm.date" is-open="vm.datePopupOpen" uib-datepicker-popup
-                        ng-click="vm.datePopupOpen = true;" popup-placement="bottom" show-button-bar="false" ng-change="vm.dateChanged()">
+                    <input type="text" class="form-control" id="date" ng-model="vm.date" is-open="vm.datePopupOpen" uib-datepicker-popup ng-click="vm.datePopupOpen = true;"
+                        popup-placement="bottom" show-button-bar="false" ng-change="vm.dateChanged()">
                 </div>
             </div>
         </div>
@@ -91,6 +91,23 @@
                     </div>
                 </collapse-panel>
             </div>
+            <h5 ng-if="!vm.meetings.length">Записи на <span ng-bind="vm.date | amDateFormat: 'll'"></span> отсутствуют</h5>
         </div>
+        <hr>
+        <h4>Создать запись вручную:</h4>
+        <create-meeting-form organization-id="vm.organization._id" service-name="vm.serviceName" date="vm.date" meeting-created="vm.meetingCreated(meeting)"
+            custom-placeholder-message="Запись создана вручную">
+            <custom-controls>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input type="" class="form-control" ng-model="vm.serviceName" placeholder="Введите название услуги" required>
+                    </div>
+                </div>
+            </custom-controls>
+            <submit-button>
+                <button class="btn btn-default transparent pull-right" type="submit">Создать запись</button>
+                <div class="clearfix"></div>
+            </submit-button>
+        </create-meeting-form>
     </div>
 </div>

@@ -3,9 +3,10 @@
 var moment = require('moment');
 
 /** @ngInject */
-module.exports = function ($stateParams, meetings, meeting, $state, toastr, dateUrlFormat) {
+module.exports = function ($stateParams, meetings, meeting, $state, toastr, dateUrlFormat, myOrganization) {
     var vm = this;
 
+    vm.organization = myOrganization;
     vm.meetings = meetings;
     vm.status = {
         pending: 'новое!',
@@ -14,7 +15,9 @@ module.exports = function ($stateParams, meetings, meeting, $state, toastr, date
         cancelled: 'отменено'
     }
 
-    vm.date = $stateParams.date ? moment($stateParams.date, dateUrlFormat).toDate() : new Date();
+    var date = $stateParams.date ? moment($stateParams.date, dateUrlFormat).hours(12) : moment().add({hours: 1}); 
+
+    vm.date = date.startOf('hour').toDate();
 
     vm.toggleResponseForm = function (meeting) {
         var id = meeting.collapsed ? meeting._id : null;
@@ -64,6 +67,14 @@ module.exports = function ($stateParams, meetings, meeting, $state, toastr, date
             status: 'rejected',
             message: meetingObject.rejectMessage || vm.rejectMessage
         }, 'Запрос отклонен');
+    }
+
+    vm.meetingCreated = function(meeting){
+        changeMeeting({
+            id: meeting._id,
+            message: 'Запись подтверждена автоматически',
+            status: 'accepted'
+        }, 'Запись создана со статусом "подтвержденная".');
     }
 
     function changeMeeting(request, notificationMessage) {

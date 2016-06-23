@@ -7,8 +7,7 @@ var moment = require('moment');
 module.exports = {
     restrict: 'E',
     bindings: {
-        date: '<',
-        dateChanged: '&'
+        date: '='
     },
     template: template,
     /** @ngInject */
@@ -38,10 +37,6 @@ module.exports = {
                 .toDate();
 
             setDate();
-
-            vm.dateChanged({
-                date: vm.date
-            });
         }
 
         function setDate() {

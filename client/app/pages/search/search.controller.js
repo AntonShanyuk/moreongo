@@ -7,12 +7,8 @@ var moment = require('moment');
 module.exports = function (organizations, $rootScope, $scope, $state, location, $document, meeting, toastr) {
     var vm = this;
 
-    vm.requestTime = moment().add({ hours: 1 }).startOf('hour').toDate();
-    vm.requestDateChanged = function (service, date) {
-        service.requestDate = date;
-    }
-
     vm.organizations = organizations;
+    vm.defaultRequestDate = moment().add({ hours: 1 }).startOf('hour').toDate();
 
     vm.hide = function (organization) {
         organization.highlight = false;
@@ -23,40 +19,9 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
         organization.highlight = true;
     }
 
-    vm.placeholderMessage = function (service) {
-        var date = moment(service.requestDate || vm.requestTime).format('HH:mm');
-        return 'Здравствуйте, я бы хотел к Вам записаться на ' + date + '. Альтернативное время: ';
-    }
-
-    vm.focusRequestMessage = function (service) {
-        if(!service.message){
-            service.message = vm.placeholderMessage(service);
-        }
-    }
-
-    vm.blurRequestMessage = function(service){
-        if(service.message == vm.placeholderMessage(service)){
-            service.message = '';
-        }
-    }
-
-    vm.sendRequest = function (organization, service) {
-        meeting.post({
-            organization: organization._id,
-            service: service.name,
-            phone: service.requestPhone,
-            email: service.requestEmail,
-            date: service.requestDate || vm.requestTime,
-            message: service.message || vm.placeholderMessage(service)
-        }).$promise.then(function () {
-            service.booking = false;
-            service.requestPhone = '';
-            service.requestEmail = '';
-            service.message = '';
-            service.requestDate = null;
-
-            toastr.success('Ожидайте подтверждение запроса по email либо по телефону', 'Запрос отправлен');
-        });
+    vm.meetingCreated = function(service){
+        service.booking = false;
+        toastr.success('Ожидайте подтверждение запроса по email либо по телефону', 'Запрос отправлен');
     }
 
     var highlightEventDestructor = $rootScope.$on('organization.highlight', function (event, id) {

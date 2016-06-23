@@ -16,38 +16,17 @@
                     <div class="col-xs-5"><span ng-bind="service.name"></span></div>
                     <div class="col-xs-3"><span ng-bind="service.price"></span> грн</div>
                     <div class="col-xs-4">
-                        <button type="button" ng-click="service.booking = !service.booking" class="btn btn-default transparent pull-right">Записаться</button>
+                        <button type="button" ng-click="service.booking = !service.booking;" class="btn btn-default transparent pull-right">Записаться</button>
                         <div class="clearfix"></div>
                     </div>
                 </div>
                 <div ng-if="service.booking" class="booking-form">
-                    <form ng-submit="vm.sendRequest(organization, service);" class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <date-time-picker date="vm.requestTime" date-changed="vm.requestDateChanged(service, date);"></date-time-picker>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <input type="text" class="form-control" placeholder="Контактный телефон" required ng-model="service.requestPhone" ui-mask="+38 (099) 999 99 99"  ui-mask-placeholder ui-mask-placeholder-char="space">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <textarea class="form-control" rows="3" placeholder="{{vm.placeholderMessage(service)}}" ng-model="service.message"
-                                    ng-focus="vm.focusRequestMessage(service);" ng-blur="vm.blurRequestMessage(service);"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-7">
-                                <input type="email" class="form-control" placeholder="Контактный email" required ng-model="service.requestEmail">
-                            </div>
-                            <div class="col-xs-5">
-                                <button class="btn btn-default transparent pull-right" type="submit">Отправить запрос</button>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </form>
+                    <create-meeting-form organization-id="organization._id" service-name="service.name" date="vm.defaultRequestDate" meeting-created="vm.meetingCreated(service);">
+                        <submit-button>
+                            <button class="btn btn-default transparent pull-right" type="submit">Отправить запрос</button>
+                            <div class="clearfix"></div>
+                        </submit-button>
+                    </create-meeting-form>
                 </div>
             </div>
         </div>
