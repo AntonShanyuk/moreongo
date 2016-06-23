@@ -1,7 +1,9 @@
 'use strict';
 
+var moment = require('moment');
+
 /** @ngInject */
-module.exports = function (meetings, meeting, $state, toastr) {
+module.exports = function ($stateParams, meetings, meeting, $state, toastr, dateUrlFormat) {
     var vm = this;
 
     vm.meetings = meetings;
@@ -12,9 +14,16 @@ module.exports = function (meetings, meeting, $state, toastr) {
         cancelled: 'отменено'
     }
 
+    vm.date = $stateParams.date ? moment($stateParams.date, dateUrlFormat).toDate() : new Date();
+
     vm.toggleResponseForm = function (meeting) {
         var id = meeting.collapsed ? meeting._id : null;
         $state.go('home.map.myService.meetings', { id: id });
+    }
+
+    vm.dateChanged = function () {
+        var date = moment(vm.date).format(dateUrlFormat);
+        $state.go('home.map.myService.meetings', { date: date });
     }
 
     vm.acceptMessage = 'Запрос подтверждаю.';

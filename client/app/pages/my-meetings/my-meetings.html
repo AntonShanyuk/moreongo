@@ -4,7 +4,8 @@
             <div class="form-group">
                 <label for="date" class="col-sm-4 control-label">Записи на дату:</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="date" value="12 июня 2006г" disabled>
+                    <input type="text" class="form-control" id="date" ng-model="vm.date" is-open="vm.datePopupOpen" uib-datepicker-popup
+                        ng-click="vm.datePopupOpen = true;" popup-placement="bottom" show-button-bar="false" ng-change="vm.dateChanged()">
                 </div>
             </div>
         </div>
