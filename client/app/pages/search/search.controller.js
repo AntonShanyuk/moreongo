@@ -49,6 +49,12 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
             date: service.requestDate || vm.requestTime,
             message: service.message || vm.placeholderMessage(service)
         }).$promise.then(function () {
+            service.booking = false;
+            service.requestPhone = '';
+            service.requestEmail = '';
+            service.message = '';
+            service.requestDate = null;
+
             toastr.success('Ожидайте подтверждение запроса по email либо по телефону', 'Запрос отправлен');
         });
     }

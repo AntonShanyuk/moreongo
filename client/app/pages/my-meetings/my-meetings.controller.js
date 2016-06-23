@@ -62,7 +62,6 @@ module.exports = function (meetings, meeting, $state, toastr) {
             return $state.reload('home.map.myService.meetings');
         }).then(() => {
             toastr.success('Клиенту отправлено email-уведомление', notificationMessage);
-            console.log(vm.meeting);
         });
     };
 }
