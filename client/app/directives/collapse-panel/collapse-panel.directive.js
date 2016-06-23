@@ -9,7 +9,8 @@ module.exports = function(){
         restrict: 'E',
         transclude: true,
         scope: {
-            collapsed: '='
+            collapsed: '=',
+            hideCollapseButton: '<'
         },
         template: template,
         link: function(scope, el){

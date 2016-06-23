@@ -4,8 +4,13 @@
 module.exports = function ($resource) {
     return $resource('', {}, {
         post: {
-            url: '/api/meetings',
+            url: '/api/meeting',
             method: 'POST'
+        },
+        put: {
+            url: '/api/meeting/:id',
+            params: { id: '@id' },
+            method: 'PUT'
         },
         getMy: {
             url: '/api/meetings/my',

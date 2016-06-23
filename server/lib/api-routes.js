@@ -52,8 +52,12 @@ class ApiRoutes {
             this.organizationController.geoFind(req, res);
         });
 
-        expressApp.post('/api/meetings', (req, res) => {
+        expressApp.post('/api/meeting', (req, res) => {
             this.meetingController.postMeeting(req, res);
+        });
+
+        expressApp.put('/api/meeting/:id', (req, res) => {
+            this.meetingController.putMeeting(req, res);
         });
 
         expressApp.get('/api/meetings/my', ensureAuthenticated, (req, res) => {

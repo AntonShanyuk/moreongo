@@ -1,0 +1,88 @@
+.my-meetings{
+    .meetings .panel{
+        &{
+            background: transparent;
+            border-color: white;
+            padding: 5px;
+        }
+        .collapse-meeting-icon{
+            left: -10px;
+        }
+        .meeting-header-row{
+            cursor: pointer;
+        }
+
+        .meeting-row{
+            margin-top: 10px;
+        }
+
+        .form-group{
+            margin-bottom: 0;
+        }
+
+         blockquote{
+             font-size: inherit;
+             padding: 5px 20px;
+             border-left: none;
+             margin: 0;
+             position: relative;
+
+             &::before{
+                 position: absolute;
+                 left: -5px;
+                 top: 5px;
+                 color: rgba(255, 255, 255, .5);
+                 font-size: 15px;
+                 display: inline-block;
+                font-family: 'Glyphicons Halflings';
+             }
+         }
+
+         blockquote.pending{
+             &::before{
+                 content: "\e095";
+             }
+         }
+
+         blockquote.accepted{
+             &::before{
+                 content: "\e013";
+             }
+         }
+
+         blockquote.cancelled{
+             &::before{
+                 content: "\e014";
+             }
+         }
+
+         blockquote.rejected{
+             &::before{
+                 content: "\e090";
+             }
+         }
+
+         .status-label{
+             &.accepted{
+                color: lawngreen;
+            }
+            &.rejected, &.cancelled{
+                color: lightgrey;
+            }
+            &.pending{
+                animation: blinker 1s linear infinite;
+            }
+            @keyframes blinker {  
+               50% { color: red; }
+            }
+         }
+    }
+
+    .meeting-panel.passed *{
+        opacity: .9;
+    }
+
+    .btn-submit{
+        margin-top: 5px;
+    }
+}

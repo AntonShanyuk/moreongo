@@ -8,7 +8,7 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
     var vm = this;
 
     vm.requestTime = moment().add({ hours: 1 }).startOf('hour').toDate();
-    vm.requestDateChanged = function(service, date){
+    vm.requestDateChanged = function (service, date) {
         service.requestDate = date;
     }
 
@@ -23,14 +23,32 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
         organization.highlight = true;
     }
 
+    vm.placeholderMessage = function (service) {
+        var date = moment(service.requestDate || vm.requestTime).format('HH:mm');
+        return 'Здравствуйте, я бы хотел к Вам записаться на ' + date + '. Альтернативное время: ';
+    }
+
+    vm.focusRequestMessage = function (service) {
+        if(!service.message){
+            service.message = vm.placeholderMessage(service);
+        }
+    }
+
+    vm.blurRequestMessage = function(service){
+        if(service.message == vm.placeholderMessage(service)){
+            service.message = '';
+        }
+    }
+
     vm.sendRequest = function (organization, service) {
         meeting.post({
             organization: organization._id,
             service: service.name,
             phone: service.requestPhone,
             email: service.requestEmail,
-            date: service.requestDate || vm.requestTime
-        }).$promise.then(function(){
+            date: service.requestDate || vm.requestTime,
+            message: service.message || vm.placeholderMessage(service)
+        }).$promise.then(function () {
             toastr.success('Ожидайте подтверждение запроса по email либо по телефону', 'Запрос отправлен');
         });
     }

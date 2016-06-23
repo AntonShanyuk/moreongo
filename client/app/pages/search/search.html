@@ -33,6 +33,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-xs-12">
+                                <textarea class="form-control" rows="3" placeholder="{{vm.placeholderMessage(service)}}" ng-model="service.message"
+                                    ng-focus="vm.focusRequestMessage(service);" ng-blur="vm.blurRequestMessage(service);"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-xs-7">
                                 <input type="email" class="form-control" placeholder="Контактный email" required ng-model="service.requestEmail">
                             </div>

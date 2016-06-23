@@ -1,6 +1,7 @@
 'use strict';
 
 var moment = require('moment');
+var _ = require('lodash');
 
 require('../pages/home-navbar/home-navbar.scss');
 var homeNavbarTemplate = require('../pages/home-navbar/home-navbar.html');
@@ -27,6 +28,7 @@ var searchController = require('../pages/search/search.controller');
 var searchMapTemplate = require('../pages/search/search-map.html');
 var searchMapController = require('../pages/search/search-map.controller');
 
+require('../pages/my-meetings/my-meetings.scss');
 var myMeetingsTemplate = require('../pages/my-meetings/my-meetings.html');
 var myMeetingsController = require('../pages/my-meetings/my-meetings.controller');
 
@@ -142,7 +144,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
             }
         })
         .state('home.map.myService.meetings', {
-            url: 'meetings/?date',
+            url: 'meetings/?date?id',
             template: myMeetingsTemplate,
             controller: myMeetingsController,
             controllerAs: 'vm',
@@ -151,7 +153,14 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
                 meetings: function ($stateParams, meeting, dateUrlFormat) {
                     var momentDate = moment($stateParams.date, dateUrlFormat);
                     var date = momentDate.isValid() ? momentDate.toDate() : null;
-                    return meeting.getMy({ date: date }).$promise;
+                    return meeting.getMy({ date: date }).$promise.then(function (meetings) {
+                        _.forEach(meetings, function (meeting) {
+                            meeting.collapsed = meeting._id != $stateParams.id;
+                            meeting.top = meeting.status == 'pending' ? 0 : 1;
+                            meeting.passed = moment(meeting.date).isBefore(moment());
+                        });
+                        return _.sortBy(meetings, 'top');
+                    });;
                 }
             }
         });

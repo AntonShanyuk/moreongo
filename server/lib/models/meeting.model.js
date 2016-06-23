@@ -7,10 +7,10 @@ var model = mongoose.model('meeting', {
     organization: { type: String, ref: 'organization', required: true },
     service: String,
     date: { type: Date, required: true },
-    status: { type: String, enum: ['pending', 'approved', 'rejected', 'cancelled'], default: 'pending' },
+    status: { type: String, enum: ['pending', 'accepted', 'rejected', 'cancelled'], default: 'pending' },
     email: String,
     phone: String,
-    messages: [String]
+    messages: [{ text: String, status: { type: String, enum: ['pending', 'accepted', 'rejected', 'cancelled'] } }]
 });
 
 module.exports = Promise.promisifyAll(model);

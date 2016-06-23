@@ -5,6 +5,10 @@ body {
     width: 100%;
 }
 
+textarea{
+    resize: vertical;
+}
+
 .validation-error{
     color: pink !important;
 }

@@ -10,7 +10,7 @@ module.exports = function (session, $state, $q) {
             vm.loginFailed = true;
             return $q.reject(err);
         }).then(function () {
-            $state.go('home.map.search', {}, { reload: 'home' });
+            $state.go('home.map.myService.meetings', {}, { reload: 'home' });
         });
     }
 }
