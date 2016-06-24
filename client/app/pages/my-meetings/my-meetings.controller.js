@@ -13,24 +13,35 @@ module.exports = function ($stateParams, meetings, $state, dateUrlFormat, myOrga
     vm.currentDate = $stateParams.date || moment().format(dateUrlFormat);
 
     vm.meetings = meetings;
-    vm.pendingRequestsExist = _.some(meetings, function(meetings, date){
+    vm.pendingRequestsExist = _.some(meetings, function (meetings, date) {
         return date != $stateParams.date;
     });
 
-    var date = $stateParams.date ? moment($stateParams.date, dateUrlFormat).hours(12) : moment().add({hours: 1}); 
+    var date = $stateParams.date ? moment($stateParams.date, dateUrlFormat).hours(12) : moment().add({ hours: 1 });
 
     vm.date = date.startOf('hour').toDate();
 
     vm.dateChanged = function () {
-        var date = moment(vm.date).format(dateUrlFormat);
-        $state.go('home.map.myService.meetings', { date: date });
+        navigateToDay(vm.date);
     }
 
-    vm.createMeeting = function(meetingObject){
-        return meeting.postAccepted(meetingObject).$promise.then(function(){
+    vm.nextDay = function () {
+        navigateToDay(moment(vm.date).add({ days: 1 }));
+    }
+
+    vm.prevDay = function () {
+        navigateToDay(moment(vm.date).add({ days: -1 }));
+    }
+
+    vm.createMeeting = function (meetingObject) {
+        return meeting.postAccepted(meetingObject).$promise.then(function () {
             return $state.reload('home.map.myService.meetings');
-        }).then(function(){
+        }).then(function () {
             toastr.success('Запись подтверждена автоматически', 'Запись создана.');
         });
+    }
+
+    function navigateToDay(date) {
+        $state.go('home.map.myService.meetings', { date: moment(date).format(dateUrlFormat) });
     }
 }
