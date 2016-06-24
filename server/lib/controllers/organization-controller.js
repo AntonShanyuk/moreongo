@@ -74,8 +74,9 @@ class OrganizationController {
     }
 
     searchServices(req, res) {
-        var regexStr = `^${req.params.term}`;
-        var regex = new RegExp(regexStr);
+        var regexStr = `${req.params.term}`;
+        var regexOptions = 'i';
+        var regex = new RegExp(regexStr, regexOptions);
         this.organizationModel.mapReduceAsync({
             scope: {
                 regex: regex
@@ -98,7 +99,8 @@ class OrganizationController {
                 services: {
                     $elemMatch: {
                         name: {
-                            $regex: regexStr
+                            $regex: regexStr,
+                            $options: regexOptions
                         }
                     }
                 }
@@ -123,7 +125,8 @@ class OrganizationController {
             query.services = {
                 $elemMatch: {
                     name: {
-                        $regex: `^${req.query.service}`
+                        $regex: `${req.query.service}`,
+                        $options: 'i'
                     }
                 }
             }
