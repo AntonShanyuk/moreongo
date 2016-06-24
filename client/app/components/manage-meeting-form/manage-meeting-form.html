@@ -49,7 +49,7 @@
                 <div class="col-xs-6">
                     <form ng-submit="vm.acceptMeeting();">
                         <form-group>
-                            <textarea class="form-control" rows="2" placeholder="{{vm.acceptMessage}}" ng-model="vm.meeting.acceptMessage" ng-focus="vm.textareaFocus(meeting, 'acceptMessage', vm.acceptMessage);"
+                            <textarea class="form-control" rows="2" placeholder="{{vm.acceptMessage}}" ng-model="vm.meeting.acceptMessage" ng-focus="vm.textareaFocus('acceptMessage', vm.acceptMessage);"
                                 ng-blur="vm.textareaBlur('acceptMessage', vm.acceptMessage);" focus-on="{{vm.meeting._id}}"></textarea>
                         </form-group>
                         <button type="submit" class="btn btn-success btn-submit pull-right">Подтвердить</button>
@@ -58,7 +58,7 @@
                 <div class="col-xs-6">
                     <form ng-submit="vm.rejectMeeting();">
                         <form-group>
-                            <textarea class="form-control" rows="2" placeholder="{{vm.rejectMessage}}" ng-model="vm.meeting.rejectMessage" ng-focus="vm.textareaFocus(meeting, 'rejectMessage', vm.rejectMessage);"
+                            <textarea class="form-control" rows="2" placeholder="{{vm.rejectMessage}}" ng-model="vm.meeting.rejectMessage" ng-focus="vm.textareaFocus('rejectMessage', vm.rejectMessage);"
                                 ng-blur="vm.textareaBlur('rejectMessage', vm.rejectMessage);"></textarea>
                         </form-group>
                         <button type="submit" class="btn btn-danger btn-submit pull-right">Отклонить</button>
@@ -69,7 +69,7 @@
                 <div class="col-xs-9 col-xs-offset-3">
                     <form ng-submit="vm.cancelMeeting();">
                         <form-group>
-                            <textarea class="form-control" rows="2" placeholder="{{vm.cancelMessage}}" ng-model="vm.meeting.cancelMessage" ng-focus="vm.textareaFocus(meeting, 'cancelMessage', vm.cancelMessage);"
+                            <textarea class="form-control" rows="2" placeholder="{{vm.cancelMessage}}" ng-model="vm.meeting.cancelMessage" ng-focus="vm.textareaFocus('cancelMessage', vm.cancelMessage);"
                                 ng-blur="vm.textareaBlur('cancelMessage', vm.cancelMessage);"></textarea>
                         </form-group>
                         <button type="submit" class="btn btn-danger btn-submit pull-right">Отменить</button>
