@@ -9,7 +9,7 @@ module.exports = function (meeting, toastr, $state) {
     vm.cancelMessage = 'Ваша запись отменена.';
     vm.status = {
         pending: 'новое!',
-        accepted: 'подтверждено',
+        accepted: 'принято',
         rejected: 'отклонено',
         cancelled: 'отменено'
     }
