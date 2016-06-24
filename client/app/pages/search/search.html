@@ -21,7 +21,8 @@
                     </div>
                 </div>
                 <div ng-if="service.booking" class="booking-form">
-                    <create-meeting-form organization-id="organization._id" service-name="service.name" date="vm.defaultRequestDate" meeting-created="vm.meetingCreated(service);">
+                    <create-meeting-form organization-id="organization._id" service-name="service.name" date="vm.defaultRequestDate" on-submit="vm.createMeeting(meeting, service);"
+                        email-required="true">
                         <submit-button>
                             <button class="btn btn-default transparent pull-right" type="submit">Отправить запрос</button>
                             <div class="clearfix"></div>

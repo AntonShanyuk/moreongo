@@ -154,15 +154,20 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
                     var momentDate = moment($stateParams.date, dateUrlFormat);
                     var date = momentDate.isValid() ? momentDate.toDate() : null;
                     return meeting.getMy({ date: date }).$promise.then(function (meetings) {
-                        _.forEach(meetings, function (meeting) {
-                            meeting.collapsed = meeting._id != $stateParams.id;
-                            meeting.passed = moment(meeting.date).isBefore(moment());
-                        });
-                        return _(meetings).filter(function (meeting) {
-                            return !meeting.passed;
-                        }).groupBy(function (meeting) {
-                            return moment(meeting.date).startOf('day').format(dateUrlFormat);
-                        }).value();
+                        return _(meetings)
+                            .map(function (meeting) {
+                                meeting.collapsed = meeting._id != $stateParams.id;
+                                meeting.passed = moment(meeting.date).isBefore(moment());
+                                meeting.dateUrlFormat = moment(meeting.date).startOf('day').format(dateUrlFormat);
+
+                                return meeting;
+                            })
+                            .filter(function (meeting) {
+                                return ($stateParams.date == meeting.dateUrlFormat) || ($stateParams.date != meeting.dateUrlFormat && !meeting.passed);
+                            })
+                            .sortBy('date')
+                            .groupBy('dateUrlFormat')
+                            .value();
                     });;
                 }
             }

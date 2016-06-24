@@ -3,11 +3,11 @@
 var moment = require('moment');
 
 /** @ngInject */
-module.exports = function (meeting) {
+module.exports = function () {
     var vm = this;
 
     vm.placeholderMessage = function () {
-        if(vm.customPlaceholderMessage){
+        if (vm.customPlaceholderMessage) {
             return vm.customPlaceholderMessage;
         }
         var date = moment(vm.date).format('HH:mm');
@@ -27,20 +27,15 @@ module.exports = function (meeting) {
     }
 
     vm.sendRequest = function () {
-        meeting.post({
-            organization: vm.organizationId,
-            service: vm.serviceName,
-            phone: vm.requestPhone,
-            email: vm.requestEmail,
-            date: vm.date,
-            message: vm.message || vm.placeholderMessage()
-        }).$promise.then(function (meeting) {
-            vm.meetingCreated({ meeting: meeting });
-
-            vm.requestPhone = '';
-            vm.requestEmail = '';
-            vm.message = '';
-            vm.date = null;
+        vm.onSubmit({
+            meeting: {
+                organization: vm.organizationId,
+                service: vm.serviceName,
+                phone: vm.requestPhone,
+                email: vm.requestEmail,
+                date: vm.date,
+                message: vm.message || vm.placeholderMessage()
+            }
         });
     }
 }

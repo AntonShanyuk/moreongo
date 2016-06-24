@@ -9,8 +9,9 @@ module.exports = {
         organizationId: '<',
         serviceName: '<',
         date: '<',
+        emailRequired: '<',
         customPlaceholderMessage: '@',
-        meetingCreated: '&'
+        onSubmit: '&'
     },
     transclude: {
         controls: '?customControls',

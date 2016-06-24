@@ -18,10 +18,10 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-xs-7">
+        <div class="col-xs-7" ng-if="vm.emailRequired">
             <input type="email" class="form-control" placeholder="Контактный email" required ng-model="vm.requestEmail">
         </div>
-        <div class="col-xs-5" ng-transclude="submit">
+        <div class="col-xs-5" ng-class="{'col-xs-offset-7': !vm.emailRequired}"ng-transclude="submit">
         </div>
     </div>
 </form>

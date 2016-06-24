@@ -12,25 +12,16 @@ class MeetingController {
     }
 
     postMeeting(req, res) {
-        this._validateMeetingRequest(req);
-        if (this.validationChecker.checkValidationErrors(req, res)) {
-            return;
-        }
-
-        this.meetingModel.createAsync({
-            organization: req.body.organization,
-            service: req.body.service,
-            date: req.body.date,
-            email: req.body.email,
-            phone: req.body.phone,
-            messages: [{
-                status: 'pending',
-                text: req.body.message
-            }]
-        }).then(doc => {
-            res.send(doc);
-        }).catch(err => {
+        this._createMeeting(req, res).catch(err => {
             res.status(500).send(err);
+        });
+    }
+
+    postMeetingAccepted(req, res) {
+        this._checkOrganizationOwnership(req.body.organization, req.user.email).then(() => {
+            return this._createMeeting(req, res, true);
+        }).catch(err => {
+            res.status(err.status || 500).send(err);
         });
     }
 
@@ -68,16 +59,11 @@ class MeetingController {
             return;
         }
 
-        Promise.props({
-            meeting: this.meetingModel.findByIdAsync(req.params.id),
-            userOrganization: this.organizationModel.findOneAsync({ user: req.user.email })
-        }).then(result => {
-            if (result.userOrganization._id.toString() !== result.meeting.organization) {
-                return Promise.reject({ status: 403, message: 'Access denied' });
-            }
-
+        this.meetingModel.findByIdAsync(req.params.id).then(meeting => {
+            return this._checkOrganizationOwnership(meeting.organization, req.user.email).return(meeting);
+        }).then(meeting => {
             var statusMismatch = false;
-            switch (result.meeting.status) {
+            switch (meeting.status) {
                 case 'pending':
                     if (req.body.status == 'pending' || req.body.status == 'cancelled') {
                         statusMismatch = true;
@@ -95,24 +81,54 @@ class MeetingController {
                     statusMismatch = true;
                     break;
                 default:
-                    throw new Error(`status ${result.meeting.status} is not supported`);
+                    throw new Error(`status ${meeting.status} is not supported`);
             }
 
             if (statusMismatch) {
-                return Promise.reject({ status: 400, message: `Cannot change status from ${result.meeting.status} to ${req.body.status}` });
+                return Promise.reject({ status: 400, message: `Cannot change status from ${meeting.status} to ${req.body.status}` });
             }
 
-            result.meeting.status = req.body.status;
-            result.meeting.messages.push({
+            meeting.status = req.body.status;
+            meeting.messages.push({
                 status: req.body.status,
                 text: req.body.message
             });
 
-            return result.meeting.saveAsync();
+            return meeting.saveAsync();
         }).then(doc => {
             res.send(doc);
         }).catch(err => {
             res.status(err.status || 500).send(err);
+        });
+    }
+
+    _checkOrganizationOwnership(organizationId, email) {
+        return this.organizationModel.findOneAsync({ user: email }).then(organization => {
+            if (organization._id.toString() !== organizationId) {
+                return Promise.reject({ status: 403, message: 'Access denied' });
+            }
+        });
+    }
+
+    _createMeeting(req, res, isOwner) {
+        this._validateMeetingRequest(req, isOwner);
+        if (this.validationChecker.checkValidationErrors(req, res)) {
+            return;
+        }
+
+        return this.meetingModel.createAsync({
+            organization: req.body.organization,
+            service: req.body.service,
+            date: req.body.date,
+            email: req.body.email,
+            phone: req.body.phone,
+            status: isOwner ? 'accepted' : 'pending',
+            messages: [{
+                status: isOwner ? 'accepted' : 'pending',
+                text: req.body.message
+            }]
+        }).then(doc => {
+            res.send(doc);
         });
     }
 
@@ -122,12 +138,17 @@ class MeetingController {
         req.checkBody('message', 'Invalid message').notEmpty().isString();
     }
 
-    _validateMeetingRequest(req) {
+    _validateMeetingRequest(req, isOwner) {
         req.checkBody('organization', 'Invalid organizationId').notEmpty().isString();
         req.checkBody('service', 'Invalid service').notEmpty().isString();
 
         req.checkBody('date').notEmpty().isDate();
-        req.checkBody('email', 'Invalid email').notEmpty().isString().isEmail();
+        if (isOwner) {
+            req.checkBody('email', 'Invalid email').optional().isString().isEmail();
+        } else {
+            req.checkBody('email', 'Invalid email').notEmpty().isString().isEmail();
+        }
+
         req.checkBody('phone', 'Invalid phone').notEmpty().isString();
         req.checkBody('message', 'Invalid message').notEmpty().isString();
     }

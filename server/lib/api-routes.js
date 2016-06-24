@@ -56,6 +56,10 @@ class ApiRoutes {
             this.meetingController.postMeeting(req, res);
         });
 
+        expressApp.post('/api/meeting/accepted', ensureAuthenticated, (req, res) => {
+            this.meetingController.postMeetingAccepted(req, res);
+        });
+
         expressApp.put('/api/meeting/:id', (req, res) => {
             this.meetingController.putMeeting(req, res);
         });

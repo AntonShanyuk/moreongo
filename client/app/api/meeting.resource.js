@@ -7,6 +7,10 @@ module.exports = function ($resource) {
             url: '/api/meeting',
             method: 'POST'
         },
+        postAccepted: {
+            url: '/api/meeting/accepted',
+            method: 'POST'
+        },
         put: {
             url: '/api/meeting/:id',
             params: { id: '@id' },

@@ -19,9 +19,11 @@ module.exports = function (organizations, $rootScope, $scope, $state, location, 
         organization.highlight = true;
     }
 
-    vm.meetingCreated = function(service){
+    vm.createMeeting = function(meetingObject, service){
         service.booking = false;
-        toastr.success('Ожидайте подтверждение запроса по email либо по телефону', 'Запрос отправлен');
+        return meeting.post(meetingObject).$promise.then(function(){
+            toastr.success('Ожидайте подтверждение запроса по email либо по телефону', 'Запрос отправлен');
+        });
     }
 
     var highlightEventDestructor = $rootScope.$on('organization.highlight', function (event, id) {

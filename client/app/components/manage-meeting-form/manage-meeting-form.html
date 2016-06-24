@@ -25,7 +25,7 @@
                     +380<span ng-bind="vm.meeting.phone"></span>
                 </div>
             </div>
-            <div class="row meeting-row">
+            <div class="row meeting-row" ng-if="vm.meeting.email">
                 <div class="col-xs-3">
                     <span class="pull-right">Email:</span>
                     <div class="clearfix"></div>
