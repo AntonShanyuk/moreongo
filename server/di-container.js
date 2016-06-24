@@ -23,7 +23,7 @@ bottle.value('meetingModel', meetingModel);
 bottle.service('ValidationChecker', ValidationChecker);
 bottle.service('SessionController', SessionController, 'orgnaizationModel');
 bottle.service('OrganizationController', OrganizationController, 'orgnaizationModel', 'userModel', 'ValidationChecker');
-bottle.service('MeetingController', MeetingController, 'meetingModel', 'orgnaizationModel', 'ValidationChecker');
+bottle.service('MeetingController', MeetingController, 'config', 'meetingModel', 'orgnaizationModel', 'ValidationChecker');
 bottle.service('ApiRoutes', ApiRoutes, 'OrganizationController', 'SessionController', 'MeetingController');
 bottle.service('ExpressWrapper', ExpressWrapper, 'config', 'ApiRoutes');
 

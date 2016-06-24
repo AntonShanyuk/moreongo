@@ -152,7 +152,7 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
                 /** @ngInject */
                 meetings: function ($stateParams, meeting, dateUrlFormat) {
                     var momentDate = moment($stateParams.date, dateUrlFormat);
-                    var date = momentDate.isValid() ? momentDate.toDate() : null;
+                    var date = momentDate.isValid() ? momentDate.format(dateUrlFormat) : null;
                     return meeting.getMy({ date: date }).$promise.then(function (meetings) {
                         return _(meetings)
                             .map(function (meeting) {

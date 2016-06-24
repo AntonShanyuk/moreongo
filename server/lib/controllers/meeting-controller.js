@@ -5,7 +5,8 @@ var moment = require('moment');
 var Promise = require('bluebird');
 
 class MeetingController {
-    constructor(meetingModel, organizationModel, validationChecker) {
+    constructor(config, meetingModel, organizationModel, validationChecker) {
+        this.config = config;
         this.meetingModel = meetingModel;
         this.organizationModel = organizationModel;
         this.validationChecker = validationChecker;
@@ -27,7 +28,7 @@ class MeetingController {
 
     getMyMeetings(req, res) {
         this.organizationModel.findOneAsync({ user: req.user.email }).then(organization => {
-            var fromDate = req.query.date ? moment(req.query.date) : moment();
+            var fromDate = req.query.date ? moment(req.query.date, this.config.dateUrlFormat) : moment();
             var toDate = moment(fromDate).add({ days: 1 });
 
             return this.meetingModel.findAsync({
