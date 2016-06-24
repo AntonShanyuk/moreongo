@@ -56,9 +56,9 @@ module.exports = function (meeting, toastr, $state) {
     }
 
     function changeMeeting(request, notificationMessage) {
-        meeting.put(request).$promise.then(() => {
+        meeting.put(request).$promise.then(function() {
             return $state.reload('home.map.myService.meetings');
-        }).then(() => {
+        }).then(function(){
             toastr.success('Клиенту отправлено email-уведомление', notificationMessage);
         });
     };
