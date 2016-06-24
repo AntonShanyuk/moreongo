@@ -10,88 +10,10 @@
             </div>
         </div>
         <div class="meetings">
-            <div ng-repeat="meeting in vm.meetings">
-                <collapse-panel class="meeting-panel" ng-class="{passed: meeting.passed}" collapsed="meeting.collapsed" hide-collapse-button="true">
-                    <div class="row meeting-header-row" ng-click="vm.toggleResponseForm(meeting);">
-                        <div class="col-xs-2">
-                            <span class="pull-right" ng-bind="meeting.date | amDateFormat: 'HH:mm'"></span>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="col-xs-5 col-xs-offset-1">
-                            <span ng-bind="meeting.service"></span>
-                        </div>
-                        <div class="col-xs-3">
-                            <span ng-bind="vm.status[meeting.status]" class="status-label {{meeting.status}}"></span>
-                        </div>
-                        <div class="col-xs-1">
-                            <i class="glyphicon collapse-meeting-icon" ng-class="{'glyphicon-menu-down' : meeting.collapsed, 'glyphicon-menu-up' : !meeting.collapsed}"></i>
-                        </div>
-                    </div>
-                    <div panel-collapse>
-                        <div class="row meeting-row">
-                            <div class="col-xs-3">
-                                <span class="pull-right">Тел.:</span>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="col-xs-9">
-                                +380<span ng-bind="meeting.phone"></span>
-                            </div>
-                        </div>
-                        <div class="row meeting-row">
-                            <div class="col-xs-3">
-                                <span class="pull-right">Email:</span>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="col-xs-9">
-                                <span ng-bind="meeting.email"></span>
-                            </div>
-                        </div>
-                        <div class="row meeting-row">
-                            <div class="col-xs-3">
-                                <span class="pull-right">Переписка:</span>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="col-xs-9">
-                                <blockquote class="{{message.status}}" ng-repeat="message in meeting.messages">
-                                    <p ng-bind="message.text"></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="row meeting-row" ng-if="meeting.status == 'pending'">
-                            <div class="col-xs-6">
-                                <form ng-submit="vm.acceptMeeting(meeting);">
-                                    <form-group>
-                                        <textarea class="form-control" rows="2" placeholder="{{vm.acceptMessage}}" ng-model="meeting.acceptMessage" ng-focus="vm.textareaFocus(meeting, 'acceptMessage', vm.acceptMessage);"
-                                            ng-blur="vm.textareaBlur(meeting, 'acceptMessage', vm.acceptMessage);" focus-on="{{meeting._id}}"></textarea>
-                                    </form-group>
-                                    <button type="submit" class="btn btn-success btn-submit pull-right">Подтвердить</button>
-                                </form>
-                            </div>
-                            <div class="col-xs-6">
-                                <form ng-submit="vm.rejectMeeting(meeting);">
-                                    <form-group>
-                                        <textarea class="form-control" rows="2" placeholder="{{vm.rejectMessage}}" ng-model="meeting.rejectMessage" ng-focus="vm.textareaFocus(meeting, 'rejectMessage', vm.rejectMessage);"
-                                            ng-blur="vm.textareaBlur(meeting, 'rejectMessage', vm.rejectMessage);"></textarea>
-                                    </form-group>
-                                    <button type="submit" class="btn btn-danger btn-submit pull-right">Отклонить</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="row meeting-row" ng-if="meeting.status == 'accepted'">
-                            <div class="col-xs-9 col-xs-offset-3">
-                                <form ng-submit="vm.cancelMeeting(meeting);">
-                                    <form-group>
-                                        <textarea class="form-control" rows="2" placeholder="{{vm.cancelMessage}}" ng-model="meeting.cancelMessage" ng-focus="vm.textareaFocus(meeting, 'cancelMessage', vm.cancelMessage);"
-                                            ng-blur="vm.textareaBlur(meeting, 'cancelMessage', vm.cancelMessage);"></textarea>
-                                    </form-group>
-                                    <button type="submit" class="btn btn-danger btn-submit pull-right">Отменить</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </collapse-panel>
+            <div ng-repeat="meeting in vm.meetings[vm.currentDate]">
+                <manage-meeting-form meeting="meeting"></manage-meeting-form>
             </div>
-            <h5 ng-if="!vm.meetings.length">Записи на <span ng-bind="vm.date | amDateFormat: 'll'"></span> отсутствуют</h5>
+            <h5 ng-if="!vm.meetings[vm.currentDate].length">Записи на <span ng-bind="vm.date | amDateFormat: 'll'"></span> отсутствуют</h5>
         </div>
         <hr>
         <h4>Создать запись вручную:</h4>

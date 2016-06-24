@@ -156,10 +156,11 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
                     return meeting.getMy({ date: date }).$promise.then(function (meetings) {
                         _.forEach(meetings, function (meeting) {
                             meeting.collapsed = meeting._id != $stateParams.id;
-                            meeting.top = meeting.status == 'pending' ? 0 : 1;
                             meeting.passed = moment(meeting.date).isBefore(moment());
                         });
-                        return _.sortBy(meetings, 'top');
+                        return _.groupBy(meetings, function(meeting){
+                            return moment(meeting.date).startOf('day').format(dateUrlFormat);
+                        });
                     });;
                 }
             }

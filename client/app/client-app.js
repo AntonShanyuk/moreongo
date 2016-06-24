@@ -14,6 +14,7 @@ var collapseOnClickDirective = require('./directives/nav-collapse-on-click/nav-c
 
 var dateTimePickerComponent = require('./components/date-time-picker/date-time-picker.component');
 var createMeetingFormComponent = require('./components/create-meeting-form/create-meeting-form.component');
+var manageMeetingFormComponent = require('./components/manage-meeting-form/manage-meeting-form.component');
 
 var routesConfig = require('./config/routes.config');
 var httpConfig = require('./config/http.config');
@@ -48,5 +49,6 @@ app
 
     .component('dateTimePicker', dateTimePickerComponent)
     .component('createMeetingForm', createMeetingFormComponent)
+    .component('manageMeetingForm', manageMeetingFormComponent)
     
     .constant('dateUrlFormat', 'D-M-YYYY');

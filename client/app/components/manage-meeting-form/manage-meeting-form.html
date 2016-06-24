@@ -1,0 +1,81 @@
+<div class="manage-meeting-form">
+    <collapse-panel class="meeting-panel" ng-class="{passed: vm.meeting.passed}" collapsed="vm.meeting.collapsed" hide-collapse-button="true">
+        <div class="row meeting-header-row" ng-click="vm.toggleResponseForm();">
+            <div class="col-xs-2">
+                <span class="pull-right" ng-bind="vm.meeting.date | amDateFormat: 'HH:mm'"></span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-xs-5 col-xs-offset-1">
+                <span ng-bind="vm.meeting.service"></span>
+            </div>
+            <div class="col-xs-3">
+                <span ng-bind="vm.status[vm.meeting.status]" class="status-label {{vm.meeting.status}}"></span>
+            </div>
+            <div class="col-xs-1">
+                <i class="glyphicon collapse-meeting-icon" ng-class="{'glyphicon-menu-down' : vm.meeting.collapsed, 'glyphicon-menu-up' : !vm.meeting.collapsed}"></i>
+            </div>
+        </div>
+        <div panel-collapse>
+            <div class="row meeting-row">
+                <div class="col-xs-3">
+                    <span class="pull-right">Тел.:</span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-xs-9">
+                    +380<span ng-bind="vm.meeting.phone"></span>
+                </div>
+            </div>
+            <div class="row meeting-row">
+                <div class="col-xs-3">
+                    <span class="pull-right">Email:</span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-xs-9">
+                    <span ng-bind="vm.meeting.email"></span>
+                </div>
+            </div>
+            <div class="row meeting-row">
+                <div class="col-xs-3">
+                    <span class="pull-right">Переписка:</span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-xs-9">
+                    <blockquote class="{{message.status}}" ng-repeat="message in vm.meeting.messages">
+                        <p ng-bind="message.text"></p>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="row meeting-row" ng-if="vm.meeting.status == 'pending'">
+                <div class="col-xs-6">
+                    <form ng-submit="vm.acceptMeeting();">
+                        <form-group>
+                            <textarea class="form-control" rows="2" placeholder="{{vm.acceptMessage}}" ng-model="vm.meeting.acceptMessage" ng-focus="vm.textareaFocus(meeting, 'acceptMessage', vm.acceptMessage);"
+                                ng-blur="vm.textareaBlur('acceptMessage', vm.acceptMessage);" focus-on="{{vm.meeting._id}}"></textarea>
+                        </form-group>
+                        <button type="submit" class="btn btn-success btn-submit pull-right">Подтвердить</button>
+                    </form>
+                </div>
+                <div class="col-xs-6">
+                    <form ng-submit="vm.rejectMeeting();">
+                        <form-group>
+                            <textarea class="form-control" rows="2" placeholder="{{vm.rejectMessage}}" ng-model="vm.meeting.rejectMessage" ng-focus="vm.textareaFocus(meeting, 'rejectMessage', vm.rejectMessage);"
+                                ng-blur="vm.textareaBlur('rejectMessage', vm.rejectMessage);"></textarea>
+                        </form-group>
+                        <button type="submit" class="btn btn-danger btn-submit pull-right">Отклонить</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row meeting-row" ng-if="vm.meeting.status == 'accepted'">
+                <div class="col-xs-9 col-xs-offset-3">
+                    <form ng-submit="vm.cancelMeeting();">
+                        <form-group>
+                            <textarea class="form-control" rows="2" placeholder="{{vm.cancelMessage}}" ng-model="vm.meeting.cancelMessage" ng-focus="vm.textareaFocus(meeting, 'cancelMessage', vm.cancelMessage);"
+                                ng-blur="vm.textareaBlur('cancelMessage', vm.cancelMessage);"></textarea>
+                        </form-group>
+                        <button type="submit" class="btn btn-danger btn-submit pull-right">Отменить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </collapse-panel>
+</div>

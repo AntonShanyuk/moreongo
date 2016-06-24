@@ -39,15 +39,20 @@ class MeetingController {
             var fromDate = req.query.date ? moment(req.query.date) : moment();
             var toDate = moment(fromDate).add({ days: 1 });
 
-            return this.meetingModel.find({
+            return this.meetingModel.findAsync({
                 organization: organization._id,
-                date: {
-                    $gt: fromDate.startOf('day').toDate(),
-                    $lt: toDate.startOf('day').toDate()
-                }
-            })
-                .sort({ date: 1 })
-                .execAsync();
+                $or: [
+                    {
+                        date: {
+                            $gt: fromDate.startOf('day').toDate(),
+                            $lt: toDate.startOf('day').toDate()
+                        }
+                    },
+                    {
+                        status: 'pending'
+                    }
+                ]
+            });
         }).then(results => {
             res.send(_.map(results, result => {
                 return _.pick(result, ['_id', 'date', 'email', 'phone', 'service', 'status', 'messages']);
@@ -104,7 +109,7 @@ class MeetingController {
             });
 
             return result.meeting.saveAsync();
-        }).then(doc =>{
+        }).then(doc => {
             res.send(doc);
         }).catch(err => {
             res.status(err.status || 500).send(err);
