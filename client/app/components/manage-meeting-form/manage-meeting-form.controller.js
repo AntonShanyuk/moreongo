@@ -25,9 +25,9 @@ module.exports = function (meeting, toastr, $state) {
         }
     }
 
-    vm.textareaBlur = function (meeting, modelName, defaultMessage) {
-        if (meeting[modelName] == defaultMessage) {
-            meeting[modelName] = '';
+    vm.textareaBlur = function (modelName, defaultMessage) {
+        if (vm.meeting[modelName] == defaultMessage) {
+            vm.meeting[modelName] = '';
         }
     }
 

@@ -158,9 +158,11 @@ module.exports = function ($stateProvider, $urlRouterProvider) {
                             meeting.collapsed = meeting._id != $stateParams.id;
                             meeting.passed = moment(meeting.date).isBefore(moment());
                         });
-                        return _.groupBy(meetings, function(meeting){
+                        return _(meetings).filter(function (meeting) {
+                            return !meeting.passed;
+                        }).groupBy(function (meeting) {
                             return moment(meeting.date).startOf('day').format(dateUrlFormat);
-                        });
+                        }).value();
                     });;
                 }
             }

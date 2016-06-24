@@ -1,5 +1,14 @@
 <div class="my-meetings">
     <div class="panel">
+        <div ng-repeat="(date, meetingGroup) in vm.meetings">
+            <div ng-if="date != vm.currentDate">
+                <h5>Новые запросы на <span ng-bind="vm.moment(date, vm.dateUrlFormat) | amDateFormat: 'll'"></span></h5>
+                <div ng-repeat="meeting in meetingGroup">
+                    <manage-meeting-form meeting="meeting"></manage-meeting-form>
+                </div>
+            </div>
+        </div>
+        <hr ng-if="pendingRequestsExist">
         <div class="form-horizontal">
             <div class="form-group">
                 <label for="date" class="col-sm-4 control-label">Записи на дату:</label>
