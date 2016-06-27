@@ -12,6 +12,7 @@ var SessionController = require('./lib/controllers/session-controller');
 var MeetingController = require('./lib/controllers/meeting-controller');
 var ApiRoutes = require('./lib/api-routes');
 var ValidationChecker = require('./lib/validation-checker');
+var EmailSender = require('./lib/email-sender');
 
 var bottle = new Bottle();
 
@@ -20,10 +21,11 @@ bottle.value('orgnaizationModel', orgnaizationModel);
 bottle.value('userModel', userModel);
 bottle.value('meetingModel', meetingModel);
 
+bottle.service('EmailSender', EmailSender, 'config');
 bottle.service('ValidationChecker', ValidationChecker);
 bottle.service('SessionController', SessionController, 'orgnaizationModel');
 bottle.service('OrganizationController', OrganizationController, 'orgnaizationModel', 'userModel', 'ValidationChecker');
-bottle.service('MeetingController', MeetingController, 'config', 'meetingModel', 'orgnaizationModel', 'ValidationChecker');
+bottle.service('MeetingController', MeetingController, 'config', 'meetingModel', 'orgnaizationModel', 'ValidationChecker', 'EmailSender');
 bottle.service('ApiRoutes', ApiRoutes, 'OrganizationController', 'SessionController', 'MeetingController');
 bottle.service('ExpressWrapper', ExpressWrapper, 'config', 'ApiRoutes');
 

@@ -5,11 +5,12 @@ var moment = require('moment');
 var Promise = require('bluebird');
 
 class MeetingController {
-    constructor(config, meetingModel, organizationModel, validationChecker) {
+    constructor(config, meetingModel, organizationModel, validationChecker, emailSender) {
         this.config = config;
         this.meetingModel = meetingModel;
         this.organizationModel = organizationModel;
         this.validationChecker = validationChecker;
+        this.emailSender = emailSender;
     }
 
     postMeeting(req, res) {
@@ -61,8 +62,11 @@ class MeetingController {
         }
 
         this.meetingModel.findByIdAsync(req.params.id).then(meeting => {
-            return this._checkOrganizationOwnership(meeting.organization, req.user.email).return(meeting);
-        }).then(meeting => {
+            return [
+                meeting,
+                this._checkOrganizationOwnership(meeting.organization, req.user.email)
+            ];
+        }).spread((meeting, organization) => {
             var statusMismatch = false;
             switch (meeting.status) {
                 case 'pending':
@@ -95,7 +99,15 @@ class MeetingController {
                 text: req.body.message
             });
 
-            return meeting.saveAsync();
+            return [
+                meeting.saveAsync(),
+                organization
+            ];
+        }).spread((meeting, organization) => {
+            if(this.config.notificationsEnabled){
+                return this.emailSender.meetingChanged(meeting, organization).return(meeting);
+            }
+            return meeting;
         }).then(doc => {
             res.send(doc);
         }).catch(err => {
@@ -117,19 +129,27 @@ class MeetingController {
             return;
         }
 
-        return this.meetingModel.createAsync({
-            organization: req.body.organization,
-            service: req.body.service,
-            date: req.body.date,
-            email: req.body.email,
-            phone: req.body.phone,
-            status: isOwner ? 'accepted' : 'pending',
-            messages: [{
+        return Promise.all([
+            this.meetingModel.createAsync({
+                organization: req.body.organization,
+                service: req.body.service,
+                date: req.body.date,
+                email: req.body.email,
+                phone: req.body.phone,
                 status: isOwner ? 'accepted' : 'pending',
-                text: req.body.message
-            }]
-        }).then(doc => {
-            res.send(doc);
+                messages: [{
+                    status: isOwner ? 'accepted' : 'pending',
+                    text: req.body.message
+                }]
+            }),
+            isOwner ? null : this.organizationModel.findByIdAsync(req.body.organization)
+        ]).spread((meeting, organization) => {
+            if (isOwner || !this.config.notificationsEnabled) {
+                return meeting;
+            }
+            return this.emailSender.meetingCreated(meeting, organization).return(meeting);
+        }).then(meeting => {
+            res.send(meeting);
         });
     }
 

@@ -2,6 +2,8 @@
 
 var Promise = require('bluebird');
 var mongoose = Promise.promisifyAll(require('mongoose'));
+var moment = require('moment');
+moment.locale('ru');
 
 var container = require('./di-container');
 
