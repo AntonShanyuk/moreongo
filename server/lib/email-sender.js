@@ -84,15 +84,8 @@ class EmailSender {
             text: message.body
         };
 
-        return new Promise((resolve, reject) => {
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(info);
-                }
-            });
-        });
+        Promise.promisifyAll(transporter);
+        return transporter.sendMailAsync(mailOptions);
     }
 }
 
