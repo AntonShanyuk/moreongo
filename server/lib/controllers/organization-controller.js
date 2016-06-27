@@ -49,7 +49,7 @@ class OrganizationController {
     putOrganization(req, res) {
         this._validateOrganization(req);
 
-        if (this._checkValidationErrors(req, res)) {
+        if (this.validationChecker.checkValidationErrors(req, res)) {
             return;
         }
 
