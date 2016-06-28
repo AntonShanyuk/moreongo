@@ -5,9 +5,9 @@ module.exports =
     function ($httpProvider) {
         $httpProvider.interceptors.push(
             /** @ngInject */
-            function ($templateCache) {
+            function ($templateCache, $q, $injector) {
                 return {
-                    'request': function (config) {
+                    request: function (config) {
                         if (config.method == 'GET') {
                             if ($templateCache.get(config.url)) {
                                 return config;
@@ -20,6 +20,13 @@ module.exports =
                         }
 
                         return config;
+                    },
+                    responseError: function (response) {
+                        console.log(response);
+                        if (response.status === 401) {
+                            $injector.get('$state').transitionTo('home.map.login');
+                        }
+                        return $q.reject(response);
                     }
                 };
             })

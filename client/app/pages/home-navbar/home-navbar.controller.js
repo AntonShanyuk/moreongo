@@ -7,6 +7,7 @@ module.exports = function (mapService, currentSession, session, $state, $scope, 
     var vm = this;
     vm.isAuthenticated = currentSession.isAuthenticated;
     vm.organizationName = currentSession.organizationName;
+    vm.service = '';
 
     vm.changeCity = function () {
         $state.go('home.map.search', { city: vm.city, lat: null, lng: null });
