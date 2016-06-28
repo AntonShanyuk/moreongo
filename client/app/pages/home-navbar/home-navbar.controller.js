@@ -1,3 +1,7 @@
+'use strict';
+
+var Bloodhound = require('typeahead.js');
+
 /** @ngInject */
 module.exports = function (mapService, currentSession, session, $state, $scope, $rootScope) {
     var vm = this;
@@ -38,5 +42,19 @@ module.exports = function (mapService, currentSession, session, $state, $scope, 
             vm.city = address.formatted_address;
             $scope.$emit('cityChanged', address.formatted_address);
         });
+    }
+
+    var services = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/services/%term',
+            wildcard: '%term'
+        }
+    });
+
+    vm.servicesTypeahead = {
+        display: '_id',
+        source: services
     }
 }

@@ -45,4 +45,41 @@
             width: 100%;
         }    
     }
+
+    .tt-menu {
+        width: 100%;
+        margin: 0;
+        padding: 8px 0;
+        background-color: #ddd;
+        border: 1px solid #888;
+        -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+                border-radius: 8px;
+        -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+            -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+                box-shadow: 0 5px 10px rgba(0,0,0,.2);
+        color: black;
+    }
+
+    .tt-suggestion {
+        padding: 3px 20px;
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .tt-suggestion:hover {
+        cursor: pointer;
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .tt-suggestion.tt-cursor {
+        color: #fff;
+        background-color: #ccc;
+
+    }
+
+    .tt-suggestion p {
+        margin: 0;
+    }
 }

@@ -23,7 +23,7 @@ var toastrConfig = require('./config/toastr.config');
 
 var app = angular.module('moreongo',
     ['ui.router', 'uiGmapgoogle-maps', 'nemLogging', 'ui.utils.masks', 'focusOn', 'ngResource', 'debounce', 'duScroll', 'ui.bootstrap', 'angularMoment', 'angular-click-outside',
-        'ui.mask', 'toastr']);
+        'ui.mask', 'toastr', 'siyfion.sfTypeahead']);
 
 app
     .config(routesConfig)

@@ -24,7 +24,8 @@
     "angular-i18n": "^1.5.7",
     "angular-ui-mask": "^1.8.6",
     "angular-input-masks": "^2.3.0",
-    "angular-toastr": "^1.7.0"
+    "angular-toastr": "^1.7.0",
+    "angular-typeahead": "^0.3.1"
   },
   "resolutions": {
     "angular": "^1.5.6",
